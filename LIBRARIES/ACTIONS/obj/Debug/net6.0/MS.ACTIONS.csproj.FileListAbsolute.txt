@@ -40,3 +40,15 @@
 /Users/sendes/MintSoupPlatform/API/mintsoup/LIBRARIES/ACTIONS/obj/Debug/net6.0/refint/MS.ACTIONS.dll
 /Users/sendes/MintSoupPlatform/API/mintsoup/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.pdb
 /Users/sendes/MintSoupPlatform/API/mintsoup/LIBRARIES/ACTIONS/obj/Debug/net6.0/ref/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/bin/Debug/net6.0/MS.ACTIONS.deps.json
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/bin/Debug/net6.0/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/bin/Debug/net6.0/MS.ACTIONS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.csproj.AssemblyReference.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.AssemblyInfoInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.AssemblyInfo.cs
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.csproj.CoreCompileInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/refint/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/MS.ACTIONS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/obj/Debug/net6.0/ref/MS.ACTIONS.dll

@@ -1,0 +1,15 @@
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/bin/Debug/net6.0/MODELS.deps.json
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/bin/Debug/net6.0/MODELS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/bin/Debug/net6.0/MODELS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/bin/Debug/net6.0/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/bin/Debug/net6.0/MS.ACTIONS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.csproj.AssemblyReference.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.AssemblyInfoInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.AssemblyInfo.cs
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.csproj.CoreCompileInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.csproj.CopyComplete
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/refint/MODELS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/MODELS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/MODELS/obj/Debug/net6.0/ref/MODELS.dll

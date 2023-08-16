@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SLVqnID83K4e1EOkBNgb3ZBdJlC2RWSMjeoq2nFl8topHtRL66aiuLQER5Zd6Fblahzp7lnkhe8cq+vaM6E2aw==",
+  "dgSpecHash": "PUdy0LiHxdz36sDqu2wflemWP9E7XOwxM/1wLXAROQLkKUMF5o/As4W38KrGU8z+7oy0Tnj6q5x/vkmRu0/b/w==",
   "success": true,
   "projectFilePath": "/Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Tests/SimpleStore_Tests.csproj",
   "expectedPackageFiles": [
@@ -92,7 +92,9 @@
     "/Users/sendes/.nuget/packages/xunit.core/2.4.2/xunit.core.2.4.2.nupkg.sha512",
     "/Users/sendes/.nuget/packages/xunit.extensibility.core/2.4.2/xunit.extensibility.core.2.4.2.nupkg.sha512",
     "/Users/sendes/.nuget/packages/xunit.extensibility.execution/2.4.2/xunit.extensibility.execution.2.4.2.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/xunit.runner.visualstudio/2.4.5/xunit.runner.visualstudio.2.4.5.nupkg.sha512"
+    "/Users/sendes/.nuget/packages/xunit.runner.visualstudio/2.4.5/xunit.runner.visualstudio.2.4.5.nupkg.sha512",
+    "/Users/sendes/.nuget/packages/microsoft.netcore.app.ref/6.0.16/microsoft.netcore.app.ref.6.0.16.nupkg.sha512",
+    "/Users/sendes/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.16/microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512"
   ],
   "logs": []
 }
