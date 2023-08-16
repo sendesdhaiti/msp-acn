@@ -91,7 +91,7 @@ namespace REPO.EMAIL
         private static readonly actions.STYLE.STYLES styles = new actions.STYLE.STYLES();
         private static readonly string MINTSOUP_MailFooterTag =
             "Mint Soup LLC © 2023, 1‌95 Maplewood Avenue STE 1, Maplewood, NJ 07040, PO Box 66. Mint Soup, Mint Soup Services and the Mint Soup logo are registered trademarks of Mint Soup.";
-        actions.Imsactions actions;
+        actions.Imsactions actions;   
 
 
         static bool mailSent = false;
