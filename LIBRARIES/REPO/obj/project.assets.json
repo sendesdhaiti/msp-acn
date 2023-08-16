@@ -15,22 +15,6 @@
           }
         }
       },
-      "MailKit/4.1.0": {
-        "type": "package",
-        "dependencies": {
-          "MimeKit": "4.1.0"
-        },
-        "compile": {
-          "lib/net6.0/MailKit.dll": {
-            "related": ".dll.config;.pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/MailKit.dll": {
-            "related": ".dll.config;.pdb;.xml"
-          }
-        }
-      },
       "Microsoft.AspNetCore.Antiforgery/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -3155,6 +3139,7 @@
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc": "2.2.0",
           "Microsoft.IdentityModel.Tokens": "6.27.0",
+          "Newtonsoft.Json": "13.0.3",
           "System.IdentityModel.Tokens.Jwt": "6.27.0"
         },
         "compile": {
@@ -3185,42 +3170,6 @@
         "lib/netstandard2.0/BouncyCastle.Cryptography.dll",
         "lib/netstandard2.0/BouncyCastle.Cryptography.xml",
         "packageIcon.png"
-      ]
-    },
-    "MailKit/4.1.0": {
-      "sha512": "m/G6LiMdu0it09rcZWaK9YtRqoc2/Xhv3+7kbCApEz1sZlK2IihWvfsf1IEWTswy5GmvWrtmh6QSdTyg5MIXgg==",
-      "type": "package",
-      "path": "mailkit/4.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icons/mailkit-50.png",
-        "lib/net462/MailKit.dll",
-        "lib/net462/MailKit.dll.config",
-        "lib/net462/MailKit.pdb",
-        "lib/net462/MailKit.xml",
-        "lib/net47/MailKit.dll",
-        "lib/net47/MailKit.dll.config",
-        "lib/net47/MailKit.pdb",
-        "lib/net47/MailKit.xml",
-        "lib/net48/MailKit.dll",
-        "lib/net48/MailKit.dll.config",
-        "lib/net48/MailKit.pdb",
-        "lib/net48/MailKit.xml",
-        "lib/net6.0/MailKit.dll",
-        "lib/net6.0/MailKit.dll.config",
-        "lib/net6.0/MailKit.pdb",
-        "lib/net6.0/MailKit.xml",
-        "lib/netstandard2.0/MailKit.dll",
-        "lib/netstandard2.0/MailKit.dll.config",
-        "lib/netstandard2.0/MailKit.pdb",
-        "lib/netstandard2.0/MailKit.xml",
-        "lib/netstandard2.1/MailKit.dll",
-        "lib/netstandard2.1/MailKit.dll.config",
-        "lib/netstandard2.1/MailKit.pdb",
-        "lib/netstandard2.1/MailKit.xml",
-        "mailkit.4.1.0.nupkg.sha512",
-        "mailkit.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Antiforgery/2.2.0": {
@@ -8759,7 +8708,6 @@
     "net6.0": [
       "MODELS >= 1.0.0",
       "MS.ACTIONS >= 1.0.0",
-      "MailKit >= 4.1.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.21",
       "Microsoft.Extensions.Configuration >= 6.0.0",
       "MimeKit >= 4.1.0",
@@ -8812,10 +8760,6 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
-          "MailKit": {
-            "target": "Package",
-            "version": "[4.1.0, )"
-          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[6.0.21, )"

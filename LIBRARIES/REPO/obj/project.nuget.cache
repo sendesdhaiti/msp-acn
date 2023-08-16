@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "623gsRJB1jsm4xkduky9Kn4Qg/7Pa4AV6W403QAvyBfGdibMU0KfeKgVKKzIMGSyFdp8uzuOlf6idQzqJ2ul9A==",
+  "dgSpecHash": "OOeql4LDGyU9jUqs54X5yHt0d5Blhg4MlM3zhSQfPUxMEgDk3HNcPndWbgVcMhf19ekGSgYmBWSCsgDwK/EDLQ==",
   "success": true,
   "projectFilePath": "/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/REPO.csproj",
   "expectedPackageFiles": [
     "/Users/sendes/.nuget/packages/bouncycastle.cryptography/2.2.1/bouncycastle.cryptography.2.2.1.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/mailkit/4.1.0/mailkit.4.1.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/microsoft.aspnetcore.antiforgery/2.2.0/microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/microsoft.aspnetcore.authentication.core/2.2.0/microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
@@ -182,8 +181,8 @@
     "/Users/sendes/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/system.xml.xpath.xdocument/4.3.0/system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.16/microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/microsoft.netcore.app.ref/6.0.16/microsoft.netcore.app.ref.6.0.16.nupkg.sha512"
+    "/Users/sendes/.nuget/packages/microsoft.netcore.app.ref/6.0.16/microsoft.netcore.app.ref.6.0.16.nupkg.sha512",
+    "/Users/sendes/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.16/microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512"
   ],
   "logs": []
 }

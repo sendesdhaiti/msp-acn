@@ -1,0 +1,17 @@
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/REPO.deps.json
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/REPO.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/REPO.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/MODELS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/MS.ACTIONS.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/MODELS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/bin/Debug/net6.0/MS.ACTIONS.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.csproj.AssemblyReference.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.AssemblyInfoInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.AssemblyInfo.cs
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.csproj.CoreCompileInputs.cache
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.csproj.CopyComplete
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/refint/REPO.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/REPO.pdb
+/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/REPO/obj/Debug/net6.0/ref/REPO.dll

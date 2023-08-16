@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/SimpleStore_Main.props" />
+</Project>
