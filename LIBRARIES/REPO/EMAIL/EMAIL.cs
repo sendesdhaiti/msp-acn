@@ -94,7 +94,6 @@ namespace REPO.EMAIL
         actions.Imsactions actions;
 
 
-
         static bool mailSent = false;
 
         private static void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
