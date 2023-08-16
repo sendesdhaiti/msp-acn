@@ -41,11 +41,11 @@
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[7.0.8, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -57,11 +57,11 @@
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
-              "version": "[6.27.0, )"
+              "version": "[7.0.0-preview2, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[6.27.0, )"
+              "version": "[7.0.0-preview2, )"
             }
           },
           "imports": [
@@ -194,9 +194,13 @@
               "target": "Package",
               "version": "[4.1.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[4.3.0, )"
+              "version": "[7.0.0, )"
             },
             "MimeKit": {
               "target": "Package",
