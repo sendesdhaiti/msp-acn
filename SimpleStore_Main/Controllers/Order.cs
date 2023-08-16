@@ -54,10 +54,10 @@ namespace SimpleStore_Main.Controllers
             }
             else
             {
-                var t = o.type;
-                var c = this.actions.DecryptFromClient(o.category);
+                var t = o?.type;
+                var c = this.actions.DecryptFromClient(o?.category);
                 var amm = o.amount;
-                var d = this.actions.DecryptFromClient(o.description);
+                var d = this.actions.DecryptFromClient(o?.description);
 
                 if(d.Length > 30){
                     d = d.Substring(0,30);

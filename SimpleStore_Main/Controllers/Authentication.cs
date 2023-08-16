@@ -25,7 +25,7 @@ namespace SimpleStore_Main.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("welcome")]
-        public async Task WelcomeUser() { }
+        public void WelcomeUser() { }
 
         /// <summary>
         /// User enters site and server registers their
@@ -38,7 +38,9 @@ namespace SimpleStore_Main.Controllers
             if (!string.IsNullOrEmpty(request))
             {
                 var account = this.actions.ConvertJsonObj<models.Account>(request);
-                if (account != null)
+                if (account != null 
+                && account?.email != null
+                && account?.password != null)
                 {
                     var e = this.actions.DecryptFromClient(account.email);
                     var p = this.actions.DecryptFromClient(account.password);
@@ -70,14 +72,19 @@ namespace SimpleStore_Main.Controllers
             if (!string.IsNullOrEmpty(request))
             {
                 var account = this.actions.ConvertJsonObj<models.Account>(request);
-                if (account != null)
+                if (account != null
+                && account.email != null
+                && account.password != null
+                && account.firstname != null
+                && account.lastname != null
+                && account.username != null)
                 {
                     var e = this.actions.DecryptFromClient(account.email);
                     var p = this.actions.DecryptFromClient(account.password);
                     var f = this.actions.DecryptFromClient(account.firstname);
                     var l = this.actions.DecryptFromClient(account.lastname);
                     var u = this.actions.DecryptFromClient(account.username);
-                    return Created("registered",await this.accounts.CreateAccount(e, p, f, l, u));
+                    return Created("registered", await this.accounts.CreateAccount(e, p, f, l, u));
                 }
                 else
                 {
@@ -91,14 +98,12 @@ namespace SimpleStore_Main.Controllers
                 var f = this.actions.DecryptFromClient(firstname);
                 var l = this.actions.DecryptFromClient(lastname);
                 var u = this.actions.DecryptFromClient(username);
-                return Created("registered",await this.accounts.CreateAccount(e, p, f, l, u));
+                return Created("registered", await this.accounts.CreateAccount(e, p, f, l, u));
             }
         }
 
         [HttpGet("check-email")]
-        public async Task<ActionResult<object>> CheckEmail(
-            string? email
-        )
+        public async Task<ActionResult<object>> CheckEmail(string? email)
         {
             var request = Request.Headers["email"];
             if (!string.IsNullOrEmpty(request))
@@ -115,9 +120,7 @@ namespace SimpleStore_Main.Controllers
         }
 
         [HttpGet("check-username")]
-        public async Task<ActionResult<object>> CheckUsername(
-            string? username
-        )
+        public async Task<ActionResult<object>> CheckUsername(string? username)
         {
             var request = Request.Headers["username"];
             if (!string.IsNullOrEmpty(request))
