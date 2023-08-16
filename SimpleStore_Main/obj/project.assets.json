@@ -3685,10 +3685,7 @@
         },
         "runtime": {
           "bin/placeholder/MS.ACTIONS.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "REPO/1.0.0": {
         "type": "project",
