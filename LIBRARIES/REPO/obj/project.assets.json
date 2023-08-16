@@ -3156,10 +3156,7 @@
         },
         "runtime": {
           "bin/placeholder/MS.ACTIONS.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
