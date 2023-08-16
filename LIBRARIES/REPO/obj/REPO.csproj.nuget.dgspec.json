@@ -17,15 +17,15 @@
           "/Users/sendes/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -36,16 +36,16 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[7.0.5, )"
+              "version": "[6.0.4, )"
             },
             "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
               "target": "Package",
-              "version": "[7.0.5, )"
+              "version": "[6.0.21, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -57,11 +57,11 @@
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
-              "version": "[7.0.0-preview2, )"
+              "version": "[6.27.0, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[7.0.0-preview2, )"
+              "version": "[6.27.0, )"
             }
           },
           "imports": [
@@ -75,6 +75,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -97,15 +107,15 @@
           "/Users/sendes/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/MS.ACTIONS.csproj": {
                 "projectPath": "/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/MS.ACTIONS.csproj"
@@ -120,8 +130,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
@@ -139,6 +149,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -161,15 +181,15 @@
           "/Users/sendes/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/MS.ACTIONS.csproj": {
                 "projectPath": "/Users/sendes/MintSoupPlatform/SimpleStore/API/LIBRARIES/ACTIONS/MS.ACTIONS.csproj"
@@ -187,8 +207,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "MailKit": {
               "target": "Package",
@@ -196,11 +216,11 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[7.0.5, )"
+              "version": "[6.0.21, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[6.0.0, )"
             },
             "MimeKit": {
               "target": "Package",
@@ -208,7 +228,7 @@
             },
             "Npgsql": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[6.0.8, )"
             },
             "System.Xml.XmlSerializer": {
               "target": "Package",
@@ -226,6 +246,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
