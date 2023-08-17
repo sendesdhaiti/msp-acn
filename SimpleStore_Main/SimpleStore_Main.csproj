@@ -23,7 +23,9 @@
     <ProjectReference Include="..\LIBRARIES\MODELS\MODELS.csproj" />
   </ItemGroup>
 
-
+  <Target Name="prodsettings" AfterTargets="AfterBuild">
+    <Copy SourceFiles="appsettings.json" DestinationFolder="./" />
+  </Target>
 
   <ItemGroup>
     <None Remove="Content\Variables.xml" />
