@@ -26,8 +26,5 @@
   <Target Name="prodsettings" AfterTargets="AfterBuild">
     <Copy SourceFiles="appsettings.json" DestinationFolder="./" />
   </Target>
-  <Content Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
 
 </Project>
