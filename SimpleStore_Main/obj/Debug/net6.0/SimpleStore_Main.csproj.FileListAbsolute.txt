@@ -67,3 +67,4 @@
 /Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Main/obj/Debug/net6.0/SimpleStore_Main.pdb
 /Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Main/obj/Debug/net6.0/SimpleStore_Main.genruntimeconfig.cache
 /Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Main/obj/Debug/net6.0/ref/SimpleStore_Main.dll
+/Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Main/bin/Debug/net6.0/Content/web.config
