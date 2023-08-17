@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SimpleStore_Main
+namespace SimpleStore_Main.Config
 {
     public static class ConfigManager
     {
-        public static IConfiguration AppSetting_Dev { get; }
-        public static IConfiguration AppSetting_Prod { get; }
+        public static IConfiguration AppSetting { get; }
 
         static ConfigManager()
         {
-            AppSetting_Dev = new ConfigurationBuilder()
-                .SetBasePath(
-                    System.Reflection.Assembly.GetEntryAssembly()
-                        ?? System.Reflection.Assembly.GetExecutingAssembly()
-                )
-                .AddJsonFile("appsettings.development.json")
-                .Build();
+            #if DEBUG
+                    Console.WriteLine("Debug build");
+                    AppSetting = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.development.json")
+                        .Build();
+            #else
+                    Console.WriteLine("Prod build");
+                    AppSetting = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json")
+                        .Build();
+            #endif
 
-            AppSetting_Prod = new ConfigurationBuilder()
-                .SetBasePath(
-                    System.Reflection.Assembly.GetEntryAssembly()
-                        ?? System.Reflection.Assembly.GetExecutingAssembly()
-                )
-                .AddJsonFile("appsettings.json")
-                .Build();
         }
     }
 }
