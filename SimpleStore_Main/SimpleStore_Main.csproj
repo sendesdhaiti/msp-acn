@@ -23,12 +23,14 @@
     <ProjectReference Include="..\LIBRARIES\MODELS\MODELS.csproj" />
   </ItemGroup>
 
+
+
   <ItemGroup>
-    <None Include="Content\*" />
+    <None Remove="Content\Variables.xml" />
+    <None Remove="Content\Encrypt_Decrypt.xml" />
   </ItemGroup>
-
-  <Target Name="prodsettings" AfterTargets="AfterBuild">
-    <Copy SourceFiles="appsettings.json" DestinationFolder="./" />
-  </Target>
-
+  <ItemGroup>
+    <Content Include="Content\Variables.xml" />
+    <Content Include="Content\Encrypt_Decrypt.xml" />
+  </ItemGroup>
 </Project>
