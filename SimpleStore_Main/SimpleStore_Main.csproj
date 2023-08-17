@@ -23,4 +23,8 @@
     <ProjectReference Include="..\LIBRARIES\MODELS\MODELS.csproj" />
   </ItemGroup>
 
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="appsettings.Development.json" DestinationFolder="$(OutDir)" />
+  </Target>
+
 </Project>
