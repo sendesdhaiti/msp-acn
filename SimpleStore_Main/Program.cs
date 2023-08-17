@@ -5,7 +5,7 @@ using SimpleStore_Main;
 const string MyAllowAllOrigins = "MyAllowAllOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-var config = ConfigManager.AppSetting_Dev;
+var config = SimpleStore_Main.Config.ConfigManager.AppSetting;
 
 
 
