@@ -13,16 +13,20 @@ namespace SimpleStore_Main
         static ConfigManager()
         {
             AppSetting_Dev = new ConfigurationBuilder()
-                .SetBasePath(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location))
+                .SetBasePath(
+                    System.Reflection.Assembly.GetEntryAssembly()
+                        ?? System.Reflection.Assembly.GetExecutingAssembly()
+                )
                 .AddJsonFile("appsettings.development.json")
                 .Build();
 
             AppSetting_Prod = new ConfigurationBuilder()
-                .SetBasePath(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location))
+                .SetBasePath(
+                    System.Reflection.Assembly.GetEntryAssembly()
+                        ?? System.Reflection.Assembly.GetExecutingAssembly()
+                )
                 .AddJsonFile("appsettings.json")
                 .Build();
         }
-
-        
     }
 }
