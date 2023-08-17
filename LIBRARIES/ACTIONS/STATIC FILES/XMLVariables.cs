@@ -38,8 +38,10 @@ namespace ACTIONS.STATICFILES
 		{
             string[] a = new string[3];
             // A FileStream is needed to read the XML document.
-            var path = Environment.CurrentDirectory;
-            var path2 = Path.GetDirectoryName(Environment.CurrentDirectory);
+            var path = Directory.GetCurrentDirectory();
+            var path2 = Environment.CurrentDirectory;
+            Console.WriteLine(path);
+            Console.WriteLine(path2);
 
             using (FileStream fs = new FileStream(path + "/Content/Variables.xml", FileMode.OpenOrCreate))
 			{
