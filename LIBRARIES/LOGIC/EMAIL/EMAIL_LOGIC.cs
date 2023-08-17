@@ -9,6 +9,7 @@ namespace LOGIC.EMAIL
     public interface IEMAIL_LOGIC
     {
         Task<bool> SendEmail(string[] creds, string[] msg);
+        Task<bool> CreateConfirmation(object[] creds);
     }
     public class EMAIL_LOGIC : IEMAIL_LOGIC
     {
@@ -37,6 +38,18 @@ namespace LOGIC.EMAIL
             {
                 return sent;
             }
+        }
+
+        public async Task<bool> CreateConfirmation(object[] creds) {
+            if (creds.Length < 3)
+            {
+                return false;
+            }
+            else {
+                return await this.email.CreateConfirmation(creds);
+            }
+
+            
         }
 
         // public async Task<models.Account[]> GetBusinessInterestAccounts(string[] creds) {

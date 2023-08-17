@@ -24,7 +24,7 @@ namespace REPO.EMAIL
         {
             dbconn = connStr ?? "";
             this.actions = a;
-            creds = new string[] { config["ConnectionStrings:SMTPServer"], config["ConnectionStrings:SMTPUsername"],  config["ConnectionStrings:SMTPPassword"] };
+            creds = new string[] { config["ConnectionStrings:SMTPServer"], config["ConnectionStrings:SMTPUsername"], config["ConnectionStrings:SMTPPassword"] };
             api_fe = APIURL;
 
         }
@@ -331,6 +331,45 @@ namespace REPO.EMAIL
                 connection.Close();
             }
             ACTIONS.Logging.Log("SAVING", "BUSINESS INTEREST EMAIL", creds[0], check.ToString());
+            return check;
+        }
+
+
+
+        public async Task<bool> CreateConfirmation(object[] creds)
+        {
+            bool check = false;
+
+            string cmd =
+                "INSERT into confirm (email, code, confirmed) VALUES((select email from account where email = @email), @code, @confirmed) ON CONFLICT (email) DO Update SET code = EXCLUDED.code ,confirmed = EXCLUDED.confirmed;";
+
+            if (creds.Length < 3)
+            {
+                return false;
+            }
+            using (NpgsqlConnection connection = new NpgsqlConnection(dbconn))
+            {
+                var command = new NpgsqlCommand(cmdText: cmd, connection: connection);
+                command.Parameters.AddWithValue("@email", creds[0]);
+                command.Parameters.AddWithValue("@confirmed", creds[1]);
+                command.Parameters.AddWithValue("@code", creds[2]);
+                connection.Open();
+
+                try
+                {
+                    var ret = await command.ExecuteNonQueryAsync();
+                    if (ret > 0)
+                    {
+                        check = true;
+                    }
+                }
+                catch (Exception msg)
+                {
+                    Console.WriteLine(msg);
+                }
+                connection.Close();
+            }
+            ACTIONS.Logging.Log("SAVING", "BUSINESS INTEREST EMAIL CONFIRMATION", creds[0], check.ToString());
             return check;
         }
     }

@@ -15,5 +15,6 @@ namespace REPO.EMAIL
             string? note
         );
         Task<bool> RegisterUser(string[] creds);
+        Task<bool> CreateConfirmation(object[] creds);
     }
 }
