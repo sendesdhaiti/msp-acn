@@ -23,6 +23,10 @@
     <ProjectReference Include="..\LIBRARIES\MODELS\MODELS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Content\*" />
+  </ItemGroup>
+
   <Target Name="prodsettings" AfterTargets="AfterBuild">
     <Copy SourceFiles="appsettings.json" DestinationFolder="./" />
   </Target>
