@@ -18,7 +18,7 @@ namespace SimpleStore_Main
                 .Build();
 
             AppSetting_Prod = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(System.Reflection.Assembly.GetEntryAssembly().Location)
                 .AddJsonFile("appsettings.json")
                 .Build();
         }
