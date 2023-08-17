@@ -13,7 +13,7 @@ namespace SimpleStore_Main
         static ConfigManager()
         {
             AppSetting_Dev = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(System.Reflection.Assembly.GetEntryAssembly().Location)
                 .AddJsonFile("appsettings.development.json")
                 .Build();
 
