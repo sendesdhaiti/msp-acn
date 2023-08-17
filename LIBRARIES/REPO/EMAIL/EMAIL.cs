@@ -24,7 +24,7 @@ namespace REPO.EMAIL
         {
             dbconn = connStr ?? "";
             this.actions = a;
-            creds = new ACTIONS.STATICFILES.XMLVariables<string>().GetXML_EmailVariables();
+            creds = new string[] { config["ConnectioStrings:SMTPServer"], config["ConnectioStrings:SMTPUsername"],  config["ConnectioStrings:SMTPPassword"] };
             api_fe = APIURL;
 
         }

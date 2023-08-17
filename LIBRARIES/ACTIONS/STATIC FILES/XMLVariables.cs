@@ -19,6 +19,7 @@ namespace ACTIONS.STATICFILES
     }
 	public class XMLVariables<T>
 	{
+
         [XmlAttribute]
         public T Value { get; set; }
 
