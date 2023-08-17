@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 // using System.Net.Http;
 using Microsoft.Net.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Cors;
 
 namespace SimpleStore_Main.Controllers
 {
+    [EnableCors("MyAllowAllOrigins")]
     [ApiController]
     [Route("api/[controller]")]
     public class Product : ControllerBase
