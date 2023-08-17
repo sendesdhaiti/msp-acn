@@ -24,7 +24,7 @@ namespace REPO.EMAIL
         {
             dbconn = connStr ?? "";
             this.actions = a;
-            creds = new string[] { config["ConnectioStrings:SMTPServer"], config["ConnectioStrings:SMTPUsername"],  config["ConnectioStrings:SMTPPassword"] };
+            creds = new string[] { config["ConnectionStrings:SMTPServer"], config["ConnectionStrings:SMTPUsername"],  config["ConnectionStrings:SMTPPassword"] };
             api_fe = APIURL;
 
         }
