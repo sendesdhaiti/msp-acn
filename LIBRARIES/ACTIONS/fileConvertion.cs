@@ -19,7 +19,7 @@ namespace ACTIONS.convert
 		{
 		}
 
-        private static ConvertTypes convert;
+        private static ConvertTypes? convert;
         public ConvertTypes convertTypes
         {
             get

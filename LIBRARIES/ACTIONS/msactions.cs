@@ -15,34 +15,10 @@ using System.Diagnostics;
 
 namespace ACTIONS.all
 {
-
     public partial class msactions : Imsactions
     {
         public static EncryptDecrypt _EncryptDecrypt = new EncryptDecrypt();
-        static NullObjectExceptionFindingWriter nullObjWriter = new NullObjectExceptionFindingWriter();
-        public NullObjectExceptionFindingWriter NullObjWriter {
-            get{
-                return nullObjWriter;
-            }
-        }
-
-        // public Microsoft.AspNetCore.Mvc.ActionResult<string> GetClientInfo(HttpContent _context){
-        //     var context = _context;
-        //     var conn = context.Headers.;
-        //     String ip = "";
-        //     if (conn != null)
-        //     {
-        //         ip = conn.RemoteIpAddress?.ToString() ?? "NULL";
-        //         Console.WriteLine( "Client is - " + conn.RemoteIpAddress?.ToString() ?? "NULL");
-        //         Console.WriteLine(conn.LocalIpAddress?.ToString() ?? "NULL");
-        //         Console.WriteLine(conn.LocalPort.ToString() ?? "NULL");
-        //         Console.WriteLine(conn.ClientCertificate?.ToString() ?? "NULL");
-        //         Console.WriteLine(conn.Id?.ToString() ?? "NULL");
-        //         Console.WriteLine(conn.RemotePort.ToString() ?? "NULL");
-        //     }
-        //     return Microsoft.AspNetCore.Mvc.ControllerBase.Ok(ip);
-        // }
-        public  string GetClientIpAddress( HttpContext httpContext)
+        public string GetClientIpAddress(HttpContext httpContext)
         {
             System.Net.IPHostEntry hostInfo;
             //Attempt to resolve the DNS connection for the given host or address (localhost)
@@ -58,13 +34,14 @@ namespace ACTIONS.all
             }
             Console.WriteLine(ACTIONS.all.msactions._ToString(l));
 
-            if(l.Count > 1)
+            if (l.Count > 1)
                 return l[1];
             else
                 return l[0];
         }
 
-        private static List<string> GetIPv4FromIpAddressList(string o, List<string> l){
+        private static List<string> GetIPv4FromIpAddressList(string o, List<string> l)
+        {
             string input = o;
             // List<string> l = new List<string>();
             System.Net.IPAddress address;
@@ -75,7 +52,8 @@ namespace ACTIONS.all
                     case System.Net.Sockets.AddressFamily.InterNetwork:
                         // we have IPv4
                         Console.WriteLine("we have IPv4");
-                        if(!l.Contains(o)){
+                        if (!l.Contains(o))
+                        {
                             l.Add(o);
                         }
 
@@ -89,31 +67,21 @@ namespace ACTIONS.all
                         break;
                 }
                 return l;
-            }else{
+            }
+            else
+            {
                 return l;
             }
         }
 
-        public T ConvertJsonObj<T>( string? jsonObj){
+        public T ConvertJsonObj<T>(string? jsonObj)
+        {
             T request = JsonConvert.DeserializeObject<T>(jsonObj ?? string.Empty);
-            
+
             return request;
         }
-        public class NullObjectExceptionFindingWriter : ITraceWriter
-        {
-            public TraceLevel LevelFilter {
-                get {
-                    return TraceLevel.Error;
-                }
-            }
 
-            public void Trace(TraceLevel level, string message, Exception ex)
-            {
-                Console.WriteLine("JSON {0} {1}: {2}", level, message, ex);
-            }
-        }
-        
-        public static  string _ToString(Object? o)
+        public static string _ToString(Object? o)
         {
             if (o != null)
             {
@@ -124,29 +92,40 @@ namespace ACTIONS.all
                 return "NULL OBJ";
             }
         }
+
         public static string _break = "\n\t\t ==============================\n";
-        public  string _break_ = _break;
+        public string _break_ = _break;
+
         public string break_() => _break_;
 
-        private const string Key = @"PABSAFMAQQBLAGUAeQBWAGEAbAB1AGUAPgA8AE0AbwBkAHUAbAB1AHMAPgBxAGcAMwA3AFYAUQA1AE8AdQBuADQAMwBDAEIAbQBkAEMATQB4AFMASQB6ADkAYQA2AHoAdgBMAEgAMAA5AGcAQgBvAG0AQwA1AEwARgBTAFkASABJAEcAZgAvAEUAZQBTAE4ASgBWAHUALwBBAEwAegBxAEgAYwA2AGIAcwBrAFgAbwBRAEIAZgBPAEUAMQBEAGMAVABKAEkATgBZAHAAWAByAFMALwBmAG4AcQBtAC8AUAB0AGQAcgBzAFcAeAB2AGEAWABwAHMARABTAG0AZwBhAEwASgBTAEEAZgBHAEkAYQA2ADUAdABCAHkAQgB6AE8AOAB0AFcAdABYAC8AaABQAG4ATABZAG0AdwBXAGoASgBFADQAQgB5AG0AUAArAC8AdABZAFIAdAB3AHMAbQBYAG4AdQBtAEkAbgA3ADQATQBTADMANAB6AGYAdgByAGcAcwA9ADwALwBNAG8AZAB1AGwAdQBzAD4APABFAHgAcABvAG4AZQBuAHQAPgBBAFEAQQBCADwALwBFAHgAcABvAG4AZQBuAHQAPgA8AFAAPgAyAEkAZQBBAGIATwBRAEkASQBzAG0AQwBTAGEAYgBCAG8AdwB5AHQAUwB0AFMAWQBZAHkAKwBLAG0AMQBYAFcASAB6AGUAWAA3AC8AMgBCADEAbgBUAGoAaABvAFYAZwA4AHMARgBxAEcAdgB1AHIATQBTAGcAZwB0AGUAegBqAEkAZgB3AGkAYQAyAGUAMgBiAEUAeQBSAHkASgBSAG4AegB2AFYAcgA4AFEAPQA9ADwALwBQAD4APABRAD4AeQBRADIAMABjAEEAbQBrAG8AVgBrAHQANgBXAHgARABJADgAYQB2AGcAMgByAFEARgB1AEQAZgBmAGwAagBZAEgARwBhAE4AUABEAE4AdABKAG0AOABaAEYAbgBpAEEASABWAEwAagAvAHoAagBQADEAWAB3AFQAMABTAGsAagB2AHQAQgBQAGoASwBpAHEAVQBDAFkAbQBpAEkAOAA3AEEAeABBAGwAdQB3AD0APQA8AC8AUQA+ADwARABQAD4ATwAvAEYAdgBOAFQAWAAvAHAAcABuAEEAagB1AEUAeQBWAEIAQQByAFgAVAA3AHoAbgBPAG4ASgBaAG0AMQBoADUASwB5AEEAVABIAGsAUwAyADYAcgBxAFgAaABCAEkAbwBZAHUAMwA4AHgAWgBlADgAegBIAFgAdABHAFcATABEADUAcAA4AGMATgAxADYAWABBAHIAcQBoAE8AdgBJAHYAVAB1AG0ARQBRAD0APQA8AC8ARABQAD4APABEAFEAPgBWAEUAVABmAFIAVABwADEAZQAzADkAUwBoAEEAegB4AGsAegBRADYANgBuADEAQgBuAE8AVgBDAEoAOABYADcAUgB1AFEAZwAvAEkATwBkAGsAMABkAHIAbgA0AFMAQQBSAGsAbwB3ADgAQQArAFMANQBTAHMAdABiAHoAUwBzAEcAOQBWAGEARQBsADIANwBqAFAANgBBAGwAaQBwAGEAbABLADAAVwA4AHcAPQA9ADwALwBEAFEAPgA8AEkAbgB2AGUAcgBzAGUAUQA+AEsAbwBuADUAdABZAGEAdABiAEwAbwBuAFYAUQBIAHQARQAwAE0AaABCAGoASgB6ADMAUwBKAEMAegBqAEUAOQBYAHUATAB2AEcAOABaADMAcABNADgANgBGAFoAQwBxAEQALwBpAFgAbABZAEMAUgBOAEYAWQBDAGwASABNAEEAZwArAE4AbABBAGEAQwBUAGcAQwBmAG0ARAAzAEIANQA1AGEAawBHAFgAUQA9AD0APAAvAEkAbgB2AGUAcgBzAGUAUQA+ADwARAA+AFoATABsADMAWAByAC8AawB2AGUAMgA0AFoAdQBIAFUAOAA3AHMAaQBBADYASwBwAEYAYQBBAEwAQgBmAGEAYgA2AEEATgBYAE4AbQBJAFoAYQB1AHIAZgBFAHIAVQBjAHYAUQBGAG8AcQByAEwAYQBLADQAQQBRAE8ANQBrAFAAUgA3AFIAawB0AFQAVQBuAG0AWQBvAHYAbgAzAFYANgBkADUAQQBUAHcANwAxAEgASABRAE4ANgBVAEoAWABmAHgANQBWADMAdABYADYATgBpADgAawBnAEMAUAB3AEUANABFAEkAMQBqAHoAdgBQAFgARABUAFEARQBvAGsAOABGADUANwB3AFUAbQBqAFAASQAzAFMAVwA4ADEAQgBUADIANABYAHYASAA3AHEAagBEADQATwBLAHYAZgA3AE4AKwBOAG4ATQB2AEEAQQBoAGwATQBFAD0APAAvAEQAPgA8AC8AUgBTAEEASwBlAHkAVgBhAGwAdQBlAD4A";
-        private static string PRIVATE_ENCRYPTKEY { get => "SENDESDHAITI|"; }
-        private static string PUBLIC_ENCRYPTKEY { get => "MINTSOUPSERVICES"; }
+        private const string Key =
+            @"PABSAFMAQQBLAGUAeQBWAGEAbAB1AGUAPgA8AE0AbwBkAHUAbAB1AHMAPgBxAGcAMwA3AFYAUQA1AE8AdQBuADQAMwBDAEIAbQBkAEMATQB4AFMASQB6ADkAYQA2AHoAdgBMAEgAMAA5AGcAQgBvAG0AQwA1AEwARgBTAFkASABJAEcAZgAvAEUAZQBTAE4ASgBWAHUALwBBAEwAegBxAEgAYwA2AGIAcwBrAFgAbwBRAEIAZgBPAEUAMQBEAGMAVABKAEkATgBZAHAAWAByAFMALwBmAG4AcQBtAC8AUAB0AGQAcgBzAFcAeAB2AGEAWABwAHMARABTAG0AZwBhAEwASgBTAEEAZgBHAEkAYQA2ADUAdABCAHkAQgB6AE8AOAB0AFcAdABYAC8AaABQAG4ATABZAG0AdwBXAGoASgBFADQAQgB5AG0AUAArAC8AdABZAFIAdAB3AHMAbQBYAG4AdQBtAEkAbgA3ADQATQBTADMANAB6AGYAdgByAGcAcwA9ADwALwBNAG8AZAB1AGwAdQBzAD4APABFAHgAcABvAG4AZQBuAHQAPgBBAFEAQQBCADwALwBFAHgAcABvAG4AZQBuAHQAPgA8AFAAPgAyAEkAZQBBAGIATwBRAEkASQBzAG0AQwBTAGEAYgBCAG8AdwB5AHQAUwB0AFMAWQBZAHkAKwBLAG0AMQBYAFcASAB6AGUAWAA3AC8AMgBCADEAbgBUAGoAaABvAFYAZwA4AHMARgBxAEcAdgB1AHIATQBTAGcAZwB0AGUAegBqAEkAZgB3AGkAYQAyAGUAMgBiAEUAeQBSAHkASgBSAG4AegB2AFYAcgA4AFEAPQA9ADwALwBQAD4APABRAD4AeQBRADIAMABjAEEAbQBrAG8AVgBrAHQANgBXAHgARABJADgAYQB2AGcAMgByAFEARgB1AEQAZgBmAGwAagBZAEgARwBhAE4AUABEAE4AdABKAG0AOABaAEYAbgBpAEEASABWAEwAagAvAHoAagBQADEAWAB3AFQAMABTAGsAagB2AHQAQgBQAGoASwBpAHEAVQBDAFkAbQBpAEkAOAA3AEEAeABBAGwAdQB3AD0APQA8AC8AUQA+ADwARABQAD4ATwAvAEYAdgBOAFQAWAAvAHAAcABuAEEAagB1AEUAeQBWAEIAQQByAFgAVAA3AHoAbgBPAG4ASgBaAG0AMQBoADUASwB5AEEAVABIAGsAUwAyADYAcgBxAFgAaABCAEkAbwBZAHUAMwA4AHgAWgBlADgAegBIAFgAdABHAFcATABEADUAcAA4AGMATgAxADYAWABBAHIAcQBoAE8AdgBJAHYAVAB1AG0ARQBRAD0APQA8AC8ARABQAD4APABEAFEAPgBWAEUAVABmAFIAVABwADEAZQAzADkAUwBoAEEAegB4AGsAegBRADYANgBuADEAQgBuAE8AVgBDAEoAOABYADcAUgB1AFEAZwAvAEkATwBkAGsAMABkAHIAbgA0AFMAQQBSAGsAbwB3ADgAQQArAFMANQBTAHMAdABiAHoAUwBzAEcAOQBWAGEARQBsADIANwBqAFAANgBBAGwAaQBwAGEAbABLADAAVwA4AHcAPQA9ADwALwBEAFEAPgA8AEkAbgB2AGUAcgBzAGUAUQA+AEsAbwBuADUAdABZAGEAdABiAEwAbwBuAFYAUQBIAHQARQAwAE0AaABCAGoASgB6ADMAUwBKAEMAegBqAEUAOQBYAHUATAB2AEcAOABaADMAcABNADgANgBGAFoAQwBxAEQALwBpAFgAbABZAEMAUgBOAEYAWQBDAGwASABNAEEAZwArAE4AbABBAGEAQwBUAGcAQwBmAG0ARAAzAEIANQA1AGEAawBHAFgAUQA9AD0APAAvAEkAbgB2AGUAcgBzAGUAUQA+ADwARAA+AFoATABsADMAWAByAC8AawB2AGUAMgA0AFoAdQBIAFUAOAA3AHMAaQBBADYASwBwAEYAYQBBAEwAQgBmAGEAYgA2AEEATgBYAE4AbQBJAFoAYQB1AHIAZgBFAHIAVQBjAHYAUQBGAG8AcQByAEwAYQBLADQAQQBRAE8ANQBrAFAAUgA3AFIAawB0AFQAVQBuAG0AWQBvAHYAbgAzAFYANgBkADUAQQBUAHcANwAxAEgASABRAE4ANgBVAEoAWABmAHgANQBWADMAdABYADYATgBpADgAawBnAEMAUAB3AEUANABFAEkAMQBqAHoAdgBQAFgARABUAFEARQBvAGsAOABGADUANwB3AFUAbQBqAFAASQAzAFMAVwA4ADEAQgBUADIANABYAHYASAA3AHEAagBEADQATwBLAHYAZgA3AE4AKwBOAG4ATQB2AEEAQQBoAGwATQBFAD0APAAvAEQAPgA8AC8AUgBTAEEASwBlAHkAVgBhAGwAdQBlAD4A";
+        private static string PRIVATE_ENCRYPTKEY
+        {
+            get => "SENDESDHAITI|";
+        }
+        private static string PUBLIC_ENCRYPTKEY
+        {
+            get => "MINTSOUPSERVICES";
+        }
+
         //public ConvType<T> ConvType;
         public ConvType<object> GetConvType<T>(Type t, object o)
         {
             return new ConvType<object>(t.GetType(), o);
         }
 
-        public ConvType<object,object> GetConvType<T,C>(Type t, object o)
+        public ConvType<object, object> GetConvType<T, C>(Type t, object o)
         {
-            return new ConvType<object,object>(t.GetType(), o);
+            return new ConvType<object, object>(t.GetType(), o);
         }
-        //public 
+
+        //public
 
         public class BinarySearch<Key, Value> where Key : IComparable<Key>
         {
-
             public Node<Key, Value> root;
+
             public BinarySearch(Key key, Value value)
             {
                 root = new Node<Key, Value>(key, value);
@@ -166,10 +145,7 @@ namespace ACTIONS.all
                 root.Insert(k, item, root);
             }
 
-
-            public class Node<K, V>
-                where K : IComparable<K>
-
+            public class Node<K, V> where K : IComparable<K>
             {
                 public bool NotNull;
                 public K key;
@@ -201,44 +177,55 @@ namespace ACTIONS.all
                     height = 0;
                 }
 
-                public List<V> SearchNodes(String element, Node<K,V>? root, List<V> _return)
-
+                public List<V> SearchNodes(String element, Node<K, V>? root, List<V> _return)
                 {
-                    Console.WriteLine("Searching Node for " + element );
-                    try {
+                    Console.WriteLine("Searching Node for " + element);
+                    try
+                    {
                         Node<K, V>? current = root;
-
 
                         if (current == null)
                         {
                             Console.WriteLine("No Node Loaded");
                             return _return;
-
                         }
                         else
                         {
                             foreach (String s in element.Split(" "))
                             {
-                                if(s == " "){
+                                if (s == " ")
+                                {
                                     continue;
-                                }else{
-                                    if(current != null && current.key != null){
-                                        foreach(String k in (current.key.ToString() ?? "").Split(" ")) {
+                                }
+                                else
+                                {
+                                    if (current != null && current.key != null)
+                                    {
+                                        foreach (
+                                            String k in (current.key.ToString() ?? "").Split(" ")
+                                        )
+                                        {
                                             var _k = k.Trim().ToLower();
                                             var _s = s.Trim().ToLower();
-                                            if (_k.Equals(_s)  )
+                                            if (_k.Equals(_s))
                                             {
-                                                if(!_return.Contains(current.element))
+                                                if (!_return.Contains(current.element))
                                                 {
-                                                    if(_k != ""){
-                                                        Console.WriteLine("Found " + k + " as --> " + s + _break);
-                                                        _return.Add( current.element);
+                                                    if (_k != "")
+                                                    {
+                                                        Console.WriteLine(
+                                                            "Found " + k + " as --> " + s + _break
+                                                        );
+                                                        _return.Add(current.element);
                                                     }
-                                                }else{
+                                                }
+                                                else
+                                                {
                                                     continue;
                                                 }
-                                                
-                                            }else{
+                                            }
+                                            else
+                                            {
                                                 continue;
                                             }
                                         }
@@ -251,18 +238,17 @@ namespace ACTIONS.all
                             if (element.CompareTo(current.key) < 0)
 
                                 return this.SearchNodes(element, current.left, _return);
-
                             else
 
                                 return this.SearchNodes(element, current.right, _return);
                         }
                     }
-                    catch (Exception m) {
-                        Console.WriteLine( _break + m + _break);
+                    catch (Exception m)
+                    {
+                        Console.WriteLine(_break + m + _break);
                     }
                     finally { }
                     return _return;
-
                 }
 
                 public override string ToString()
@@ -301,7 +287,9 @@ namespace ACTIONS.all
                     var l = left?.GetHeight();
                     var r = right?.GetHeight();
                     Console.WriteLine(_break + "Displaying Node");
-                    Console.WriteLine(ToString(element)  + $" {l ?? 0}:left and {r ?? 0}:right " + _break);
+                    Console.WriteLine(
+                        ToString(element) + $" {l ?? 0}:left and {r ?? 0}:right " + _break
+                    );
                 }
 
                 public int CompareTo(K obj)
@@ -324,7 +312,9 @@ namespace ACTIONS.all
                     }
                     else
                     {
-                        Console.WriteLine($"{_break} Node Height is : {this.height} for {_break} {ToString(this)}");
+                        Console.WriteLine(
+                            $"{_break} Node Height is : {this.height} for {_break} {ToString(this)}"
+                        );
                         return this.height;
                     }
                 }
@@ -338,7 +328,8 @@ namespace ACTIONS.all
                     else if (key.CompareTo(n.key) < 0)
                     {
                         n.left = Insert(key, item, n.left);
-                        if(n.right != null && n.left != null){
+                        if (n.right != null && n.left != null)
+                        {
                             if ((n.left.height) - (n.right.height) == 2)
                             {
                                 n = RotateWithLeftChild(n);
@@ -352,7 +343,8 @@ namespace ACTIONS.all
                     else if (key.CompareTo(n.key) > 0)
                     {
                         n.right = Insert(key, item, n.right);
-                        if(n.right != null && n.left != null){
+                        if (n.right != null && n.left != null)
+                        {
                             if ((n.right.GetHeight()) - (n.left.GetHeight()) == 2)
                             {
                                 if (key.CompareTo(n.right.key) > 0)
@@ -371,8 +363,10 @@ namespace ACTIONS.all
                         }
                     }
 
-                    if(n != null){
-                        if(n.left != null && n.right != null){
+                    if (n != null)
+                    {
+                        if (n.left != null && n.right != null)
+                        {
                             n.height = Math.Max(n.left.GetHeight(), n.right.GetHeight()) + 1;
                         }
                     }
@@ -382,41 +376,46 @@ namespace ACTIONS.all
                 private Node<K, V>? RotateWithLeftChild(Node<K, V>? n2)
                 {
                     Node<K, V>? n1;
-                    if(n2 != null){
+                    if (n2 != null)
+                    {
                         n1 = n2.left;
-                        if(n1 != null)
+                        if (n1 != null)
                         {
                             n2.left = n1.right;
-                            n1.right = n2;  
-                            if(n2.left != null && n2.right != null){
+                            n1.right = n2;
+                            if (n2.left != null && n2.right != null)
+                            {
                                 n2.height = Math.Max(n2.left.GetHeight(), n2.right.GetHeight()) + 1;
                             }
 
-                            if(n1.left != null){
+                            if (n1.left != null)
+                            {
                                 n1.height = Math.Max(n1.left.GetHeight(), n2.GetHeight()) + 1;
                             }
-
                         }
-                        else{
+                        else
+                        {
                             n2.left = null;
                         }
-                    }else{
+                    }
+                    else
+                    {
                         n1 = null;
                     }
-                    
 
                     return n1;
                 }
 
                 private Node<K, V>? RotateWithRightChild(Node<K, V>? n1)
                 {
-
                     Node<K, V>? n2;
-                    if(n1 != null){
+                    if (n1 != null)
+                    {
                         //if n1 is not null continue with rotating nodes
                         n2 = n1.left; //set n2 to left node of n1
 
-                        if(n2 != null){
+                        if (n2 != null)
+                        {
                             //if n2 is not null (n1.left is not null) then continue
                             if (n2.right != null)
                             {
@@ -430,20 +429,23 @@ namespace ACTIONS.all
 
                             if (n2.right != null)
                             {
-                                //if n2's right node is not null then set 
+                                //if n2's right node is not null then set
                                 n2.right = n1;
                             }
                             else
                             {
                                 n2.right = null;
                             }
-                            if(n1.left != null && n2.right != null){
-                                n1.height = Math.Max(n1.left.GetHeight(), n2.right.GetHeight() ) + 1;
-                                n2.height = Math.Max(n2.right.GetHeight() , n1.GetHeight() ) + 1;
+                            if (n1.left != null && n2.right != null)
+                            {
+                                n1.height = Math.Max(n1.left.GetHeight(), n2.right.GetHeight()) + 1;
+                                n2.height = Math.Max(n2.right.GetHeight(), n1.GetHeight()) + 1;
                             }
                         }
-                    }else{
-                        //if n1 is null set n2 to null and return 
+                    }
+                    else
+                    {
+                        //if n1 is null set n2 to null and return
                         n2 = null;
                     }
                     return n2;
@@ -451,7 +453,8 @@ namespace ACTIONS.all
 
                 private Node<K, V>? DoubleWithLeftChild(Node<K, V>? n3)
                 {
-                    if(n3 != null){
+                    if (n3 != null)
+                    {
                         n3.left = RotateWithRightChild(n3.left);
                     }
                     return RotateWithLeftChild(n3);
@@ -459,19 +462,17 @@ namespace ACTIONS.all
 
                 private Node<K, V>? DoubleWithRightChild(Node<K, V>? n1)
                 {
-                    if(n1 != null){
+                    if (n1 != null)
+                    {
                         n1.right = RotateWithLeftChild(n1.right);
                     }
                     return RotateWithRightChild(n1);
                 }
-
             }
-
         }
 
         private static string DecryptStringFromBytes(byte[]? cipherText, byte[]? key, byte[]? iv)
         {
-
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
             {
@@ -508,7 +509,13 @@ namespace ACTIONS.all
                     // Create the streams used for decryption.
                     using (var msDecrypt = new MemoryStream(cipherText))
                     {
-                        using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                        using (
+                            var csDecrypt = new CryptoStream(
+                                msDecrypt,
+                                decryptor,
+                                CryptoStreamMode.Read
+                            )
+                        )
                         {
                             using (var srDecrypt = new StreamReader(csDecrypt))
                             {
@@ -526,13 +533,28 @@ namespace ACTIONS.all
             }
             return plaintext;
         }
-        public string DecryptFromClient(string text)
+
+        public bool IsBase64String(string? base64)
         {
+            if(base64 == null) {
+                return false;
+            }
+            base64 = base64.Trim();
+            return (base64.Length % 4 == 0)
+                && System.Text.RegularExpressions.Regex.IsMatch(base64, @"^[a-zA-Z0-9\+/]*={0,3}$", System.Text.RegularExpressions.RegexOptions.None);
+        }
+
+        public string DecryptFromClient(string? text)
+        {
+            if (!IsBase64String(text)) {
+                return "not encoded string spotted";
+            }
             var keybytes = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);
             var iv = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);
 
             var encrypted = Convert.FromBase64String(text);
             var decriptedFromJavascript = DecryptStringFromBytes(encrypted, keybytes, iv);
+            Logging.Log("Decrypting", "email, id, or content", text, decriptedFromJavascript);
             return string.Format(decriptedFromJavascript);
         }
 
@@ -560,48 +582,69 @@ namespace ACTIONS.all
             }
         }
 
-
         public string[] GetKeyWords(string text)
         {
             var keywords = text.Split(" ");
             return keywords;
         }
-        public class ConvType<T,C>
-        where T:class 
-        where C:class
+
+        public class ConvType<T, C>
+            where T : class
+            where C : class
         {
             public T type;
             public object obj1;
-            public ConvType(T t, object o) { type = t; obj1 = o; }
+
+            public ConvType(T t, object o)
+            {
+                type = t;
+                obj1 = o;
+            }
+
             public async Task<Dictionary<String, object>> GetTypeObjs<Ty, Class>()
             {
                 await new msactions().voidTask(1);
                 Dictionary<String, object> o = new Dictionary<String, object>();
                 PropertyInfo[] propertyInfos;
-                propertyInfos = typeof(Class).GetProperties(System.Reflection.BindingFlags.Public |
-                                              System.Reflection.BindingFlags.Static);
+                propertyInfos = typeof(Class).GetProperties(
+                    System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static
+                );
                 // sort properties by name
-                Array.Sort(propertyInfos,
-                        delegate(PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
-                        { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
+                Array.Sort(
+                    propertyInfos,
+                    delegate(PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+                    {
+                        return propertyInfo1.Name.CompareTo(propertyInfo2.Name);
+                    }
+                );
 
                 // write property names
                 foreach (PropertyInfo propertyInfo in propertyInfos)
                 {
-                    Console.WriteLine(propertyInfo.Name + " " + propertyInfo.GetValue(propertyInfo.Name));
+                    Console.WriteLine(
+                        propertyInfo.Name + " " + propertyInfo.GetValue(propertyInfo.Name)
+                    );
 
                     foreach (var method in type.GetType().GetMethods())
                     {
                         var parameters = method.GetParameters();
-                        var parameterDescriptions = string.Join
-                            (", ", method.GetParameters()
-                                        .Select(x => x.ParameterType + " " + x.Name)
-                                        .ToArray());
-                        if(method.Name.Equals("Get" +propertyInfo.Name) || method.Name.Contains("Get" +propertyInfo.Name) )
-                        Console.WriteLine("{0} {1} ({2})",
-                                        method.ReturnType,
-                                        method.Name,
-                                        parameterDescriptions);
+                        var parameterDescriptions = string.Join(
+                            ", ",
+                            method
+                                .GetParameters()
+                                .Select(x => x.ParameterType + " " + x.Name)
+                                .ToArray()
+                        );
+                        if (
+                            method.Name.Equals("Get" + propertyInfo.Name)
+                            || method.Name.Contains("Get" + propertyInfo.Name)
+                        )
+                            Console.WriteLine(
+                                "{0} {1} ({2})",
+                                method.ReturnType,
+                                method.Name,
+                                parameterDescriptions
+                            );
                         if (method.IsPublic)
                         {
                             if (method.GetParameters().Count() > 0)
@@ -610,23 +653,30 @@ namespace ACTIONS.all
                             }
                             else
                             {
-                                o.Add(propertyInfo.Name , method.Invoke(obj1, new object[] { }) ?? new object{ });
+                                o.Add(
+                                    propertyInfo.Name,
+                                    method.Invoke(obj1, new object[] { }) ?? new object { }
+                                );
                                 break;
                             }
                         }
                     }
-                    
                 }
                 return o;
-                
             }
         }
-        public class ConvType<T>
-            where T : class
+
+        public class ConvType<T> where T : class
         {
             public T type;
             public object obj1;
-            public ConvType(T t, object o) { type = t; obj1 = o; }
+
+            public ConvType(T t, object o)
+            {
+                type = t;
+                obj1 = o;
+            }
+
             public async Task<object[]> GetTypeObjs<Ty>()
             {
                 await new msactions().voidTask(1);
@@ -634,15 +684,17 @@ namespace ACTIONS.all
                 foreach (var method in type.GetType().GetMethods())
                 {
                     var parameters = method.GetParameters();
-                    var parameterDescriptions = string.Join
-                        (", ", method.GetParameters()
-                                     .Select(x => x.ParameterType + " " + x.Name)
-                                     .ToArray());
+                    var parameterDescriptions = string.Join(
+                        ", ",
+                        method.GetParameters().Select(x => x.ParameterType + " " + x.Name).ToArray()
+                    );
 
-                    Console.WriteLine("{0} {1} ({2})",
-                                      method.ReturnType,
-                                      method.Name,
-                                      parameterDescriptions);
+                    Console.WriteLine(
+                        "{0} {1} ({2})",
+                        method.ReturnType,
+                        method.Name,
+                        parameterDescriptions
+                    );
                     if (method.IsPublic)
                     {
                         if (method.GetParameters().Count() > 0)
@@ -657,8 +709,6 @@ namespace ACTIONS.all
                 }
                 return o;
             }
-
-            
         }
 
         public Microsoft.AspNetCore.Http.IFormFile? GetImage(string oldfilePath, string root)
@@ -674,8 +724,13 @@ namespace ACTIONS.all
                     {
                         var fileName = Path.GetFileName(oldfilePath);
 
-                        file = new Microsoft.AspNetCore.Http.FormFile(baseStream: fileStream, baseStreamOffset: 0,
-                                length: fileStream.Length, name: fileName, fileName: oldfilePath);
+                        file = new Microsoft.AspNetCore.Http.FormFile(
+                            baseStream: fileStream,
+                            baseStreamOffset: 0,
+                            length: fileStream.Length,
+                            name: fileName,
+                            fileName: oldfilePath
+                        );
                     }
                 }
                 else
@@ -683,20 +738,21 @@ namespace ACTIONS.all
                     string path = root + "/Images/MSS/no-image.svg";
                     using (FileStream fileStream = System.IO.File.OpenRead(path))
                     {
-
-                        file = new Microsoft.AspNetCore.Http.FormFile(baseStream: fileStream, baseStreamOffset: 0,
-                                length: fileStream.Length, name: "no-image", fileName: path);
+                        file = new Microsoft.AspNetCore.Http.FormFile(
+                            baseStream: fileStream,
+                            baseStreamOffset: 0,
+                            length: fileStream.Length,
+                            name: "no-image",
+                            fileName: path
+                        );
                     }
                 }
-
             }
             catch (Exception msg)
             {
                 Console.WriteLine(msg);
             }
-            finally
-            {
-            }
+            finally { }
 
             return file;
         }
@@ -707,7 +763,6 @@ namespace ACTIONS.all
             try
             {
                 Console.WriteLine(oldfilePath);
-
 
                 var r = File.Exists(oldfilePath);
 
@@ -735,7 +790,6 @@ namespace ACTIONS.all
                     fileContent.Position = 0;
                     file = new FormFile(fileContent, 0, fileContent.Length, "no-image", fileName);
                 }
-
             }
             catch (Exception msg)
             {
@@ -761,9 +815,14 @@ namespace ACTIONS.all
 
                 if (System.IO.File.Exists(oldfilePath))
                 {
-                    using (System.IO.FileStream objFStream = new System.IO.FileStream(oldfilePath, System.IO.FileMode.Open, FileAccess.Read))
+                    using (
+                        System.IO.FileStream objFStream = new System.IO.FileStream(
+                            oldfilePath,
+                            System.IO.FileMode.Open,
+                            FileAccess.Read
+                        )
+                    )
                     {
-
                         var fileName = Path.GetFileName(oldfilePath);
                         Console.WriteLine("Exists " + fileName);
                         byte[] bytRead = new byte[(int)objFStream.Length];
@@ -779,13 +838,17 @@ namespace ACTIONS.all
                         objFStream.Close();
                         objFStream.Dispose();
                     }
-
-
                 }
                 else
                 {
                     String _path = root + "/Images/MSS/no-image.svg";
-                    using (System.IO.FileStream objFStream = new System.IO.FileStream(_path, System.IO.FileMode.Open, FileAccess.Read))
+                    using (
+                        System.IO.FileStream objFStream = new System.IO.FileStream(
+                            _path,
+                            System.IO.FileMode.Open,
+                            FileAccess.Read
+                        )
+                    )
                     {
                         var fileName = Path.GetFileName(_path);
                         Console.WriteLine("Does Not Exist " + fileName);
@@ -803,24 +866,23 @@ namespace ACTIONS.all
                         objFStream.Close();
                         objFStream.Dispose();
                     }
-
                 }
-
             }
             catch (Exception msg)
             {
                 Console.WriteLine(msg);
             }
-            finally
-            {
-
-            }
+            finally { }
 
             return file;
         }
 
-
-        public void SaveImage(Microsoft.AspNetCore.Http.IFormFile file, string FolderName, string rootPath, string encodedImageName)
+        public void SaveImage(
+            Microsoft.AspNetCore.Http.IFormFile file,
+            string FolderName,
+            string rootPath,
+            string encodedImageName
+        )
         {
             String savePath;
             if (file != null)
@@ -833,18 +895,25 @@ namespace ACTIONS.all
                         rootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                     }
 
-
-
-
-
                     var r = Directory.CreateDirectory(rootPath);
                     if (r.Exists)
                     {
                         Console.WriteLine($"Root Path is {rootPath}");
-                        String path = rootPath + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/" + fileName;
-                        if (!System.IO.File.Exists(rootPath + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/"))
+                        String path =
+                            rootPath
+                            + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/"
+                            + fileName;
+                        if (
+                            !System.IO.File.Exists(
+                                rootPath
+                                    + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/"
+                            )
+                        )
                         {
-                            System.IO.Directory.CreateDirectory(rootPath + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/");
+                            System.IO.Directory.CreateDirectory(
+                                rootPath
+                                    + $"/Images/{FolderName}/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/"
+                            );
                         }
                         if (System.IO.File.Exists(path))
                         {
@@ -875,23 +944,28 @@ namespace ACTIONS.all
                 {
                     Console.WriteLine($"Continueing at {DateTime.UtcNow.AddHours(-4)}");
                 }
-
             }
             else
             {
-
                 savePath = rootPath + "/Images/MSS/no-image.svg";
             }
         }
 
-        public async Task SaveBusinessImage(Microsoft.AspNetCore.Http.IFormFile file, string rootPath, string encodedImageName)
+        public async Task SaveBusinessImage(
+            Microsoft.AspNetCore.Http.IFormFile file,
+            string rootPath,
+            string encodedImageName
+        )
         {
             try
             {
                 await voidTask(1);
                 if (file.Length > 0)
                 {
-                    string path = rootPath + "/Images/Businesses" + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
+                    string path =
+                        rootPath
+                        + "/Images/Businesses"
+                        + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
 
                     if (!Directory.Exists(path))
                     {
@@ -911,14 +985,21 @@ namespace ACTIONS.all
             }
         }
 
-        public async Task SaveProductImage(Microsoft.AspNetCore.Http.IFormFile file, string rootPath, string encodedImageName)
+        public async Task SaveProductImage(
+            Microsoft.AspNetCore.Http.IFormFile file,
+            string rootPath,
+            string encodedImageName
+        )
         {
             try
             {
                 await voidTask(1);
                 if (file.Length > 0)
                 {
-                    string path = rootPath + "/Images/Products" + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
+                    string path =
+                        rootPath
+                        + "/Images/Products"
+                        + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
 
                     if (!Directory.Exists(path))
                     {
@@ -938,14 +1019,21 @@ namespace ACTIONS.all
             }
         }
 
-        public async Task SaveServiceImage(Microsoft.AspNetCore.Http.IFormFile file, string rootPath, string encodedImageName)
+        public async Task SaveServiceImage(
+            Microsoft.AspNetCore.Http.IFormFile file,
+            string rootPath,
+            string encodedImageName
+        )
         {
             try
             {
                 await voidTask(1);
                 if (file.Length > 0)
                 {
-                    string path = rootPath + "/Images/Services" + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
+                    string path =
+                        rootPath
+                        + "/Images/Services"
+                        + $"/{DateTime.UtcNow.Year}/{DateTime.UtcNow.Month}/";
 
                     if (!Directory.Exists(path))
                     {
@@ -969,128 +1057,12 @@ namespace ACTIONS.all
         {
             await Task.Factory.StartNew(() => Thread.Sleep(num));
         }
+
         public async Task<bool> WaitTask(int num)
         {
             await voidTask(num);
             return true;
         }
-
-        
-
-        // public List<object[]> ConvertList_of_Type_to_object<T>(List<T> l)
-        // {
-        //     List<object[]> objects = new List<object[]>();
-        //     if (l.Count() > 0)
-        //     {
-        //         //l = SortBusinesses(l);
-        //         foreach (object? b in l)
-        //         {
-        //             if (b != null)
-        //             {
-        //                 if (typeof(T) == typeof(IProduct))
-        //                 {
-        //                     IProduct obj = (IProduct)b;
-
-        //                     objects.Add(new object[]
-        //                     {
-        //                     obj.GetPublicId(),
-        //                     obj.GetCategory(),
-        //                     obj.GetName(),
-        //                     obj.GetPrice(),
-        //                     obj.GetDescription(),
-        //                     obj.GetProductStatus(),
-        //                     obj.GetSize(),
-        //                     obj.GetColor(),
-        //                     obj.GetProductType(),
-        //                     obj.GetDeliveryMethod(),
-        //                     obj.GetProductSubscription(),
-        //                     obj.GetInventory(),
-        //                     obj.GetAddedDate(),
-        //                     obj.GetUpdatedDate()
-        //                     });
-        //                 }
-        //                 else if (typeof(T) == typeof(IBusiness))
-        //                 {
-        //                     IBusiness bus = (IBusiness)b;
-        //                     objects.Add(new object[]
-        //                         {
-        //                     bus.GetPublicID(),
-        //                     bus.GetBusinessNumber(),
-        //                     bus.GetName(),
-        //                     bus.GetClients(),
-        //                     bus.GetViews(),
-        //                     bus.GetClients(),
-        //                     bus.GetFollowers(),
-        //                     bus.GetLikes(),
-        //                     bus.GetComments(),
-        //                     bus.GetCommentLikes(),
-        //                     bus.GetRank(),
-        //                     bus.GetRating(),
-        //                     bus.GetPrivacyLevel(),
-        //                     bus.GetBusinessStatus(),
-        //                     bus.GetRemote(),
-        //                     bus.GetMobile(),
-        //                     bus.GetAddedDate(),
-        //                     bus.GetUpdatedDate()
-        //                         });
-        //                 }
-        //                 else if (typeof(T) == typeof(IBusiness))
-        //                 {
-        //                     IBusiness bus = (IBusiness)b;
-        //                     objects.Add(new object[]
-        //                         {
-        //                     bus.GetPublicID(),
-        //                     bus.GetBusinessNumber(),
-        //                     bus.GetName(),
-        //                     bus.GetClients(),
-        //                     bus.GetViews(),
-        //                     bus.GetClients(),
-        //                     bus.GetFollowers(),
-        //                     bus.GetLikes(),
-        //                     bus.GetComments(),
-        //                     bus.GetCommentLikes(),
-        //                     bus.GetRank(),
-        //                     bus.GetRating(),
-        //                     bus.GetPrivacyLevel(),
-        //                     bus.GetBusinessStatus(),
-        //                     bus.GetRemote(),
-        //                     bus.GetMobile(),
-        //                     bus.GetAddedDate(),
-        //                     bus.GetUpdatedDate()
-        //                         });
-        //                 }
-
-        //             }
-        //         }
-        //         return objects;
-        //     }
-        //     else
-        //     {
-        //         return objects;
-        //     }
-        // }
-
-        // public List<MODELS.IBusiness> SortBusinesses(List<MODELS.IBusiness> bs)
-        // {
-        //     var watch = new System.Diagnostics.Stopwatch();
-        //     int min, upper;
-        //     MODELS.IBusiness temp;
-        //     upper = bs.Count - 1;
-        //     for (int outer = 0; outer <= upper; outer++)
-        //     {
-        //         min = outer;
-        //         for (int inner = outer + 1; inner <= upper; inner++)
-        //         {
-        //             if (bs[inner].GetBusinessNumber() < bs[min].GetBusinessNumber())
-        //                 min = inner;
-        //         }
-        //         temp = bs[outer];
-        //         bs[outer] = bs[min];
-        //         bs[min] = temp;
-        //     }
-        //     Console.WriteLine($"Sorting time was {watch.Elapsed}");
-        //     return bs;
-        // }
 
         private int ConvertStringToInt(string stringToConvert)
         {
@@ -1104,74 +1076,7 @@ namespace ACTIONS.all
             return stringValue;
         }
 
-        // public List<MODELS.IBusiness> FindBusiness_in_ListOfObjects(List<MODELS.IBusiness> businesses, string name, System.Diagnostics.Stopwatch timer)
-        // {
-        //     businesses = SortBusinesses(businesses);
-        //     int upperBound, lowerBound, mid, nameIntEquivalence;
-        //     upperBound = businesses.Count - 1;
-        //     lowerBound = 0;
-        //     nameIntEquivalence = ConvertStringToInt(name);
-        //     businesses.Sort();
-        //     while (lowerBound <= upperBound)
-        //     {
-        //         mid = (upperBound + lowerBound) / 2;
-        //         int businessNameIntEquivalence = ConvertStringToInt(businesses[mid].GetName());
-        //         if (businessNameIntEquivalence == nameIntEquivalence)
-        //         {
-        //             //returns
-        //             return new List<MODELS.IBusiness>() { businesses[mid] };
-        //         }
-        //         else if (nameIntEquivalence < businessNameIntEquivalence)
-        //         {
-        //             //returns lower bound
-        //             return FindBusiness_in_ListOfObjects(businesses.Take(mid).ToList(), name, timer);
-        //         }
-        //         else
-        //         {
-        //             //returns upper bound
-        //             return FindBusiness_in_ListOfObjects(businesses.Take(Range.StartAt(mid)).ToList(), name, timer);
-        //         }
-        //     }
-        //     timer.Stop();
-        //     Console.WriteLine("Looped time for Business Search in List of Businesses = " + timer.Elapsed);
-        //     return new List<MODELS.IBusiness>();
-        // }
-
-        // public List<MODELS.IBusiness> FindBusiness_in_ListOfObjects(List<MODELS.IBusiness> businesses, int id, System.Diagnostics.Stopwatch timer)
-        // {
-        //     businesses = SortBusinesses(businesses);
-        //     int upperBound, lowerBound, mid;
-        //     upperBound = businesses.Count - 1;
-        //     lowerBound = 0;
-        //     //nameIntEquivalence = ConvertStringToInt(name);
-        //     businesses.Sort();
-        //     while (lowerBound <= upperBound)
-        //     {
-        //         mid = (upperBound + lowerBound) / 2;
-        //         int busNumber = businesses[mid].GetBusinessNumber();
-        //         if (busNumber == id)
-        //         {
-        //             //returns
-        //             return new List<MODELS.IBusiness>() { businesses[mid] };
-        //         }
-        //         else if (id < busNumber)
-        //         {
-        //             //returns lower bound
-        //             return FindBusiness_in_ListOfObjects(businesses.Take(mid).ToList(), id, timer);
-        //         }
-        //         else
-        //         {
-        //             //returns upper bound
-        //             return FindBusiness_in_ListOfObjects(businesses.Take(Range.StartAt(mid)).ToList(), id, timer);
-        //         }
-        //     }
-        //     timer.Stop();
-        //     Console.WriteLine("Looped time for Business Search in List of Businesses = " + timer.Elapsed);
-        //     return new List<MODELS.IBusiness>();
-        // }
-
         public ControllerResponses? responses;
-
 
         public Token GetToken()
         {
@@ -1185,18 +1090,17 @@ namespace ACTIONS.all
 
         public string Encrypt(string emailOrusername, string whatIsBeingEncrypted)
         {
-            return EncryptDecrypt.EncryptString(emailOrusername,
-                whatIsBeingEncrypted);
+            return EncryptDecrypt.EncryptString(emailOrusername, whatIsBeingEncrypted);
         }
 
         public string Encrypt(string whatIsBeingEncrypted)
         {
             return EncryptDecrypt.EncryptString(whatIsBeingEncrypted);
         }
+
         public string Dencrypt(string emailOrusername, string whatIsBeingDecrypted)
         {
-            return EncryptDecrypt.DecryptString(emailOrusername,
-                whatIsBeingDecrypted);
+            return EncryptDecrypt.DecryptString(emailOrusername, whatIsBeingDecrypted);
         }
 
         public string Dencrypt(string whatIsBeingDecrypted)
@@ -1206,7 +1110,6 @@ namespace ACTIONS.all
 
         public string Base64Encode(string plainText)
         {
-
             return EncryptDecrypt.Base64Encode(plainText);
         }
 
@@ -1219,10 +1122,12 @@ namespace ACTIONS.all
         {
             return HttpUtility.UrlEncode(urlstring);
         }
+
         public string UrlDecode(string urlstring)
         {
             return HttpUtility.UrlDecode(urlstring);
         }
+
         public string v2_Encrypt(string text)
         {
             return EncryptDecrypt.v2_EncryptText(text);
@@ -1247,7 +1152,6 @@ namespace ACTIONS.all
         {
             return EncryptDecrypt.v2_DecryptText(text);
         }
-        
 
         public static string _v2_Decrypt(byte[]? text)
         {
@@ -1259,6 +1163,7 @@ namespace ACTIONS.all
         {
             [XmlElement("Public")]
             public RSAParameters Public { get; set; }
+
             [XmlElement("Private")]
             public RSAParameters Private { get; set; }
         }
@@ -1268,23 +1173,27 @@ namespace ACTIONS.all
             [XmlAttribute]
             public T? Value { get; set; }
         }
+
         public class EncryptDecrypt
         {
             static int KeyLength;
+
             private static void CheckEncyptionSize(string key)
             {
-
                 var key1 = Encoding.UTF8.GetBytes(key);
                 //myAes.Key = Key; //ERROR
                 KeySizes[] ks = Aes.Create().LegalKeySizes;
                 foreach (KeySizes item in ks)
                 {
                     KeyLength = (int)key1.LongLength;
-                    Console.WriteLine("Legal min key size = " + item.MinSize + $" {key1.LongLength}");
-                    Console.WriteLine("Legal max key size = " + item.MaxSize + $" {key1.LongLength}");
+                    Console.WriteLine(
+                        "Legal min key size = " + item.MinSize + $" {key1.LongLength}"
+                    );
+                    Console.WriteLine(
+                        "Legal max key size = " + item.MaxSize + $" {key1.LongLength}"
+                    );
                 }
             }
-
 
             private static T? Deserialize<T>(string data) where T : class
             {
@@ -1315,13 +1224,20 @@ namespace ACTIONS.all
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Environment.CurrentDirectory;
+                        var path = Directory.GetCurrentDirectory();
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //    first we read from the xml to check if RSAParams exist already
-                        using (Stream reader = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open))
+                        using (
+                            Stream reader = new FileStream(
+                                path + "/Content/Encrypt_Decrypt.xml",
+                                FileMode.Open
+                            )
+                        )
                         {
-                            var xs = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                            var xs = new System.Xml.Serialization.XmlSerializer(
+                                typeof(XML_EncryptDecrypt)
+                            );
                             //get the object back from the stream
                             var ret = (XML_EncryptDecrypt?)xs.Deserialize(reader);
                             pub = ret?.Public;
@@ -1333,53 +1249,62 @@ namespace ACTIONS.all
                                 Console.WriteLine("It is empty");
                                 pub = rsa.ExportParameters(false);
                                 priv = rsa.ExportParameters(true);
-                                using (Stream writer = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open, FileAccess.ReadWrite))
+                                using (
+                                    Stream writer = new FileStream(
+                                        path + "/Content/Encrypt_Decrypt.xml",
+                                        FileMode.Open,
+                                        FileAccess.ReadWrite
+                                    )
+                                )
                                 {
                                     var c = new XML_EncryptDecrypt();
                                     c.Public = (RSAParameters)pub;
                                     c.Private = (RSAParameters)priv;
-                                    var xs2 = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                                    var xs2 = new System.Xml.Serialization.XmlSerializer(
+                                        typeof(XML_EncryptDecrypt)
+                                    );
 
                                     //get the object back from the stream
                                     xs2.Serialize(writer, c);
                                 }
                             }
-
 
                             rsa.ImportParameters((RSAParameters)pub);
                             var byteData = Encoding.Unicode.GetBytes(text);
                             var encryptedData = rsa.Encrypt(byteData, false);
                             Return = Convert.ToBase64String(encryptedData);
                         }
-
-
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                finally
-                {
-                }
+                finally { }
                 return Return;
             }
 
-
             public static byte[] v2_EncryptText_ToBytes(string text)
             {
-                byte[] Return = new byte[]{};
+                byte[] Return = new byte[] { };
                 try
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Environment.CurrentDirectory;
+                        var path = Directory.GetCurrentDirectory();
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //    first we read from the xml to check if RSAParams exist already
-                        using (Stream reader = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open))
+                        using (
+                            Stream reader = new FileStream(
+                                path + "/Content/Encrypt_Decrypt.xml",
+                                FileMode.Open
+                            )
+                        )
                         {
-                            var xs = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                            var xs = new System.Xml.Serialization.XmlSerializer(
+                                typeof(XML_EncryptDecrypt)
+                            );
                             //get the object back from the stream
                             var ret = (XML_EncryptDecrypt?)xs.Deserialize(reader);
                             pub = ret?.Public;
@@ -1391,55 +1316,66 @@ namespace ACTIONS.all
                                 Console.WriteLine("It is empty");
                                 pub = rsa.ExportParameters(false);
                                 priv = rsa.ExportParameters(true);
-                                using (Stream writer = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open, FileAccess.ReadWrite))
+                                using (
+                                    Stream writer = new FileStream(
+                                        path + "/Content/Encrypt_Decrypt.xml",
+                                        FileMode.Open,
+                                        FileAccess.ReadWrite
+                                    )
+                                )
                                 {
                                     var c = new XML_EncryptDecrypt();
                                     c.Public = (RSAParameters)pub;
                                     c.Private = (RSAParameters)priv;
-                                    var xs2 = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                                    var xs2 = new System.Xml.Serialization.XmlSerializer(
+                                        typeof(XML_EncryptDecrypt)
+                                    );
 
                                     //get the object back from the stream
                                     xs2.Serialize(writer, c);
                                 }
                             }
 
-
                             rsa.ImportParameters((RSAParameters)pub);
                             var byteData = Encoding.Unicode.GetBytes(text);
                             var encryptedData = rsa.Encrypt(byteData, false);
                             Return = encryptedData;
                         }
-
-
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                finally
-                {
-                }
+                finally { }
                 return Return;
             }
 
             public static string v2_DecryptText(string? text)
             {
-                // if(text != null){
-                //     return new Guid().ToString();
-                // }
+                if (text == null || text == "" || text?.Length < 100)
+                {
+                    return "Empty, Null, or non encrypted string";
+                }
                 string Return = "";
                 try
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Environment.CurrentDirectory;
+                        var path = Directory.GetCurrentDirectory();
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //first we read from the xml to check if RSAParams exist already
-                        using (Stream reader = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open))
+                        using (
+                            Stream reader = new FileStream(
+                                path + "/Content/Encrypt_Decrypt.xml",
+                                FileMode.Open
+                            )
+                        )
                         {
-                            var xs = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                            var xs = new System.Xml.Serialization.XmlSerializer(
+                                typeof(XML_EncryptDecrypt)
+                            );
                             //get the object back from the stream
                             var ret = (XML_EncryptDecrypt?)xs.Deserialize(reader);
                             pub = ret?.Public;
@@ -1456,7 +1392,7 @@ namespace ACTIONS.all
                             byte[] bi = Convert.FromBase64String(text.Trim());
                             byte[] bdecr = rsa.Decrypt(bi, false);
                             Return = Encoding.Unicode.GetString(bdecr);
-                            Console.WriteLine(_break +  $"Decrypted item is {Return}" + _break);
+                            Console.WriteLine(_break + $"Decrypted item is {Return}" + _break);
                         }
                     }
                 }
@@ -1464,29 +1400,35 @@ namespace ACTIONS.all
                 {
                     return ex.Message;
                 }
-                finally
-                {
-                }
+                finally { }
                 return Return;
             }
 
             public static string v2_DecryptText_FromBytes(byte[]? text)
             {
-                // if(text != null){
-                //     return new Guid().ToString();
-                // }
                 string Return = "";
+                if (text == null || text.Length < 1)
+                {
+                    return Return;
+                }
                 try
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Environment.CurrentDirectory;
+                        var path = Directory.GetCurrentDirectory();
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //first we read from the xml to check if RSAParams exist already
-                        using (Stream reader = new FileStream(path + "/Content/Encrypt_Decrypt.xml", FileMode.Open))
+                        using (
+                            Stream reader = new FileStream(
+                                path + "/Content/Encrypt_Decrypt.xml",
+                                FileMode.Open
+                            )
+                        )
                         {
-                            var xs = new System.Xml.Serialization.XmlSerializer(typeof(XML_EncryptDecrypt));
+                            var xs = new System.Xml.Serialization.XmlSerializer(
+                                typeof(XML_EncryptDecrypt)
+                            );
                             //get the object back from the stream
                             var ret = (XML_EncryptDecrypt?)xs.Deserialize(reader);
                             pub = ret?.Public;
@@ -1500,9 +1442,9 @@ namespace ACTIONS.all
                             }
 
                             rsa.ImportParameters((RSAParameters)privateRSA);
-                            byte[] bdecr = rsa.Decrypt(text ?? new byte[]{}, false);
-                            Return = Encoding.Unicode.GetString(bdecr ?? new byte[]{});
-                            Console.WriteLine(_break +  $"Decrypted item is {Return}" + _break);
+                            byte[] bdecr = rsa.Decrypt(text ?? new byte[] { }, false);
+                            Return = Encoding.Unicode.GetString(bdecr ?? new byte[] { });
+                            Console.WriteLine(_break + $"Decrypted item is {Return}" + _break);
                         }
                     }
                 }
@@ -1510,12 +1452,9 @@ namespace ACTIONS.all
                 {
                     return ex.Message;
                 }
-                finally
-                {
-                }
+                finally { }
                 return Return;
             }
-
 
             public static string Base64Encode(string plainText)
             {
@@ -1540,14 +1479,21 @@ namespace ACTIONS.all
 
                 using (Aes aes = Aes.Create())
                 {
-
                     ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
+                        using (
+                            CryptoStream cryptoStream = new CryptoStream(
+                                (Stream)memoryStream,
+                                encryptor,
+                                CryptoStreamMode.Write
+                            )
+                        )
                         {
-                            using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                            using (
+                                StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream)
+                            )
                             {
                                 streamWriter.Write(plainText);
                             }
@@ -1575,9 +1521,17 @@ namespace ACTIONS.all
 
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
+                        using (
+                            CryptoStream cryptoStream = new CryptoStream(
+                                (Stream)memoryStream,
+                                encryptor,
+                                CryptoStreamMode.Write
+                            )
+                        )
                         {
-                            using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                            using (
+                                StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream)
+                            )
                             {
                                 streamWriter.Write(objectToEncrypt);
                             }
@@ -1601,9 +1555,17 @@ namespace ACTIONS.all
 
                     using (MemoryStream memoryStream = new MemoryStream(buffer))
                     {
-                        using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+                        using (
+                            CryptoStream cryptoStream = new CryptoStream(
+                                (Stream)memoryStream,
+                                decryptor,
+                                CryptoStreamMode.Read
+                            )
+                        )
                         {
-                            using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                            using (
+                                StreamReader streamReader = new StreamReader((Stream)cryptoStream)
+                            )
                             {
                                 return streamReader.ReadToEnd();
                             }
@@ -1620,7 +1582,6 @@ namespace ACTIONS.all
                 byte[] buffer = Convert.FromBase64String(objectToDecypt);
                 try
                 {
-
                     using (Aes aes = Aes.Create())
                     {
                         aes.Key = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);
@@ -1630,9 +1591,19 @@ namespace ACTIONS.all
 
                         using (MemoryStream memoryStream = new MemoryStream(buffer))
                         {
-                            using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+                            using (
+                                CryptoStream cryptoStream = new CryptoStream(
+                                    (Stream)memoryStream,
+                                    decryptor,
+                                    CryptoStreamMode.Read
+                                )
+                            )
                             {
-                                using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                                using (
+                                    StreamReader streamReader = new StreamReader(
+                                        (Stream)cryptoStream
+                                    )
+                                )
                                 {
                                     Return = streamReader.ReadToEnd();
                                 }
@@ -1646,44 +1617,67 @@ namespace ACTIONS.all
                 }
                 return Return;
             }
-
-
         }
 
         /// <summary>
-        /// Helps you get a jwt token with your email 
+        /// Helps you get a jwt token with your email
         /// </summary>
         public class Token
         {
             private string email;
             private string personid;
 
-            public string Email { get => email; }
-            public string PersonId { get => personid; }
+            public string Email
+            {
+                get => email;
+            }
+            public string PersonId
+            {
+                get => personid;
+            }
 
-            public Token() { email = ""; personid = ""; }
+            public Token()
+            {
+                email = "";
+                personid = "";
+            }
 
             public Token(string _em, string _personid)
             {
                 this.email = _em;
                 this.personid = _personid;
             }
+
             /// <summary>
             /// This generates a token based on the user's email or username and assigns their role
             /// </summary>
             /// <param name="email_or_username"></param>
             /// <returns></returns>
-            public string Generate_MINTSOUP_JWTtoken(string PersonId, string email, string? username, string RequestIssuerUrl, string RequestAudienceUrl )
+            public string Generate_MINTSOUP_JWTtoken(
+                string PersonId,
+                string email,
+                string? username,
+                string RequestIssuerUrl,
+                string RequestAudienceUrl
+            )
             {
-                var MINTSOUP_securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes($"MINTSOUP|BY|SENDES"));
-                var token_credentials = new SigningCredentials(MINTSOUP_securityKey, SecurityAlgorithms.HmacSha256);
+                var MINTSOUP_securityKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes($"MINTSOUP|BY|SENDES")
+                );
+                var token_credentials = new SigningCredentials(
+                    MINTSOUP_securityKey,
+                    SecurityAlgorithms.HmacSha256
+                );
                 var myclaims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Iss, "MINTSOUP"),
-                    new Claim("PersonId", PersonId),//TODO - we should check if the user's credentials say they are admin/viewer/guest/or none
+                    new Claim("PersonId", PersonId), //TODO - we should check if the user's credentials say they are admin/viewer/guest/or none
                     new Claim(JwtRegisteredClaimNames.Email, email),
                     new Claim("Username", username ?? PersonId),
-                    new Claim(JwtRegisteredClaimNames.AuthTime, DateTime.UtcNow.AddHours(-4).ToString()),
+                    new Claim(
+                        JwtRegisteredClaimNames.AuthTime,
+                        DateTime.UtcNow.AddHours(-4).ToString()
+                    ),
                     new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddHours(-3).ToString())
                 };
 
@@ -1703,8 +1697,6 @@ namespace ACTIONS.all
                 var token = handler.ReadJwtToken(MSToken);
                 return token;
             }
-
-
         }
 
         public class ControllerResponses
@@ -1717,13 +1709,20 @@ namespace ACTIONS.all
             }
 
             private static WhichControllerIsIt distinction { get; set; }
-            private readonly static string OkString = $"\n\n\t\tThe request was found (true) at '{DateTime.Now}' due to a check for: \n\t\t";
-            private readonly static string CreatedString = $"\n\n\t\tThe request was created successfully (true) at '{DateTime.Now}' for: \n\t\t";
-            private readonly static string PartiallyCreatedString = $"\n\n\t\tThe request was partially created (parts not saved) at '{DateTime.Now}' for: \n\t\t";
-            private readonly static string BadRequestString = $"\n\n\t\tThere was a bad request at '{DateTime.Now}' for: \n\t\t";
-            private readonly static string NotFoundString = $"\n\n\t\tThe request was not found at '{DateTime.Now}' for: \n\t\t";
-            private readonly static string NotCreatedString = $"\n\n\t\tThe request was not created (false) at '{DateTime.Now}' for: \n\t\t";
-            private readonly static string ConflictString = $"\n\n\t\tThere was a conflict during the request at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string OkString =
+                $"\n\n\t\tThe request was found (true) at '{DateTime.Now}' due to a check for: \n\t\t";
+            private readonly static string CreatedString =
+                $"\n\n\t\tThe request was created successfully (true) at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string PartiallyCreatedString =
+                $"\n\n\t\tThe request was partially created (parts not saved) at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string BadRequestString =
+                $"\n\n\t\tThere was a bad request at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string NotFoundString =
+                $"\n\n\t\tThe request was not found at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string NotCreatedString =
+                $"\n\n\t\tThe request was not created (false) at '{DateTime.Now}' for: \n\t\t";
+            private readonly static string ConflictString =
+                $"\n\n\t\tThere was a conflict during the request at '{DateTime.Now}' for: \n\t\t";
 
             public string ConflictRequest(object o, object? forwhatAction)
             {
@@ -1830,7 +1829,6 @@ namespace ACTIONS.all
                 Console.WriteLine(a);
                 return a;
             }
-
         }
 
         public class ConvertTypes
@@ -1839,11 +1837,6 @@ namespace ACTIONS.all
             {
                 return (T)(object)i;
             }
-
         }
-
-
-
     }
 }
-
