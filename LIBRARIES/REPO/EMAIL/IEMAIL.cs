@@ -30,6 +30,12 @@ namespace REPO.EMAIL
         /// </summary>
         /// <returns></returns>
         int GetCode();
+        /// <summary>
+        /// New Confirmation code Update to Confirmation
+        /// </summary>
+        /// <param name="creds"></param>
+        /// <returns></returns>
+        Task<bool> NewConfirmationCode(string email, int code);
 
 
     }

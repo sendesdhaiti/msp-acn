@@ -547,7 +547,7 @@ namespace ACTIONS.all
         public string DecryptFromClient(string? text)
         {
             if (!IsBase64String(text)) {
-                return "not encoded string spotted";
+                return "non encoded string spotted";
             }
             var keybytes = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);
             var iv = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);

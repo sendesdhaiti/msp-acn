@@ -24,7 +24,7 @@ namespace LOGIC
         public BASELOGICCLASS(actions.Imsactions a, repo.IAccount_REPO r){
             actions = a;
             user = r;
-            api_fe = config?["ConnectionStrings:SimpleStoreFE"] ?? "";
+            api_fe = config["ConnectionStrings:SimpleStoreFE"] ?? "";
         }
 
         /// <summary>

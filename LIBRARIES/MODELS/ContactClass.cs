@@ -24,6 +24,7 @@ namespace MODELS
         public DateTime? added { get; set; }
         public DateTime? updated { get; set; }
         public string? email { get; set; }
+        public bool v2_or_client { get; set; }
     }
     public enum MeetingFrequency {
         OneTime,

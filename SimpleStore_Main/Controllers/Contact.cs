@@ -52,9 +52,18 @@ namespace SimpleStore_Main.Controllers
             string e;
             try
             {
-                e = actions.v2_Decrypt(o.email);
+                if (o.v2_or_client == true)
+                {
+                    e = actions.v2_Decrypt(o.email);
+                }
+                else
+                {
+
+                    e = actions.DecryptFromClient(o.email);
+                }
             }
-            catch {
+            catch
+            {
                 e = "";
             }
 
@@ -70,12 +79,14 @@ namespace SimpleStore_Main.Controllers
             object[] send;
             if (o.date != null)
             {
-                send = new object[] { e, (int)confirmation, o.code, o.date };
+                send = new object[4] { e, (int)confirmation, o.code, o.date };
             }
             else
             {
-                send = new object[] { e, (int)confirmation, o.code };
+                send = new object[3] { e, (int)confirmation, o.code };
             }
+
+
 
             var sent = await this.logic.UpdateConfirmation(creds: send);
             if (sent)
@@ -85,6 +96,40 @@ namespace SimpleStore_Main.Controllers
             else
             {
                 return Ok(new object[] { sent, "Your interest about our business could not be completed. TRY AGAIN LATER!", });
+            }
+        }
+
+        [HttpPut("new-email-confirmation-code")]
+        public async Task<IActionResult> NewConfirmationCode([FromQuery] GetMeetingTimesClass o)
+        {
+            string e;
+            try
+            {
+                if (o.v2_or_client_Encryption)
+                {
+                    e = actions.v2_Decrypt(o.useremail);
+                }
+                else
+                {
+
+                    e = actions.DecryptFromClient(o.useremail);
+                }
+            }
+            catch
+            {
+                e = "";
+            }
+
+
+            
+            var sent = await this.logic.NewConfirmationCode(e);
+            if (sent)
+            {
+                return Ok(new object[] { sent, $"Your code has been updated. Check your email at '{e.ToUpper()}' for more details.", });
+            }
+            else
+            {
+                return Ok(new object[] { sent, "Your code could not be updated. TRY AGAIN LATER!", });
             }
         }
 
@@ -120,24 +165,31 @@ namespace SimpleStore_Main.Controllers
                 string e;
                 try
                 {
-                    e = actions.v2_Decrypt(o.email);
+                    e = actions.DecryptFromClient(o.email);
+                    for (int i = 0; i < o.times.Length - 1; i++)
+                    {
+                        o.times[i].creator = actions.DecryptFromClient(o.times[i].creator);
+                    }
 
                 }
                 catch
                 {
                     e = "unencrypted email was used";
                 }
+                Console.WriteLine(ACTIONS.all.msactions._ToString(o));
+                Console.WriteLine(e);
                 int check = await this.logic.CreateMeetingTime(e, o.times);
-                var x = new object[] { };
-                if (check > 1)
+                var x = new object[2] { false, "" };
+                Console.WriteLine(check);
+                if (check > 0)
                 {
-                    x.Append(true);
-                    x.Append("The meeting times are now live.");
+                    x[0] = true;
+                    x[1] = "The meeting times are now live.";
                 }
                 else
                 {
-                    x.Append(false);
-                    x.Append("The meeting times could not be uploaded.");
+                    x[0] = false;
+                    x[1] = "The meeting times could not be uploaded.";
                 }
                 return Ok(x);
             }
@@ -146,16 +198,35 @@ namespace SimpleStore_Main.Controllers
                 return BadRequest();
             }
         }
+        public class GetMeetingTimesClass
+        {
+            [FromQuery(Name = "encryptedUser")]
+            public string? useremail { get; set; }
+            [FromQuery(Name = "v2_or_client_Encryption")]
+            public bool v2_or_client_Encryption { get; set; }
+        }
 
         [HttpGet("get-meeting-times")]
-        public async Task<IActionResult> GetMeetingTimes(string encryptedUser)
+        public async Task<IActionResult> GetMeetingTimes([FromQuery] GetMeetingTimesClass user)
         {
-            var e = actions.v2_Decrypt(encryptedUser);
-            if (!actions.IsValidEmail(e))
-            {
-                return Ok(null);
-            }
-            return Ok(await this.logic.GetMeetingTimes());
+            //Console.WriteLine(ACTIONS.all.msactions._ToString(user));
+            //string e;
+            //if (user.v2_or_client_Encryption == true)
+            //{
+            //    e = actions.v2_Decrypt(user.useremail);
+            //}
+            //else
+            //{
+            //    e = actions.DecryptFromClient(user.useremail);
+            //}
+            //Console.WriteLine(ACTIONS.all.msactions._ToString(e));
+            //if (!actions.IsValidEmail(e))
+            //{
+            //    return Ok(new object[1] { "not a valid email" });
+            //}
+            var mt = await this.logic.GetMeetingTimes();
+            Console.WriteLine(ACTIONS.all.msactions._ToString(mt));
+            return Ok(mt);
         }
     }
 }

@@ -495,6 +495,40 @@ namespace REPO.EMAIL
             return check;
         }
 
+        public async Task<bool> NewConfirmationCode(string email, int code)
+        {
+            bool check = false;
+
+            string cmd =
+                "UPDATE confirm SET (code, confirmed, updated) = ( @code, @confirmed, @updated) where email = (select email from account where email = @email);";
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(dbconn))
+            {
+                var command = new NpgsqlCommand(cmdText: cmd, connection: connection);
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@confirmed", false);
+                command.Parameters.AddWithValue("@code", code);
+                command.Parameters.AddWithValue("@updated", DateTime.UtcNow.AddHours(-4));
+                connection.Open();
+
+                try
+                {
+                    var ret = await command.ExecuteNonQueryAsync();
+                    if (ret > 0)
+                    {
+                        check = true;
+                    }
+                }
+                catch (Exception msg)
+                {
+                    Console.WriteLine(msg);
+                }
+                connection.Close();
+            }
+            ACTIONS.Logging.Log("NEW Code", "BUSINESS INTEREST EMAIL CONFIRMATION", email, check.ToString());
+            return check;
+        }
+
         public async Task<models.MeetingConfirmation[]?> GetConfirmations(object[] creds, bool All_or_Personal)
         {
             models.MeetingConfirmation[] check = new MODELS.MeetingConfirmation[] { };
@@ -566,10 +600,7 @@ namespace REPO.EMAIL
             using (NpgsqlConnection connection = new NpgsqlConnection(dbconn))
             {
                 var command = new NpgsqlCommand(cmdText: cmd, connection: connection);
-                command.Parameters.AddWithValue("@email", creds[0]);
-                command.Parameters.AddWithValue("@confirmed", creds[1]);
-                command.Parameters.AddWithValue("@code", creds[2]);
-                command.Parameters.AddWithValue("@date", creds[3]);
+                command.Parameters.AddWithValue("@email", email);
                 connection.Open();
 
                 try
@@ -600,17 +631,13 @@ namespace REPO.EMAIL
 
         public async Task<models.MeetingTime[]> GetMeetingTimes()
         {
-            models.MeetingTime[] check = new models.MeetingTime[] { };
+            List< models.MeetingTime> check = new List<models.MeetingTime>();
 
             string cmd =
                 "select * from meetingtime;";
             using (NpgsqlConnection connection = new NpgsqlConnection(dbconn))
             {
                 var command = new NpgsqlCommand(cmdText: cmd, connection: connection);
-                command.Parameters.AddWithValue("@email", creds[0]);
-                command.Parameters.AddWithValue("@confirmed", creds[1]);
-                command.Parameters.AddWithValue("@code", creds[2]);
-                command.Parameters.AddWithValue("@date", creds[3]);
                 connection.Open();
 
                 try
@@ -629,7 +656,7 @@ namespace REPO.EMAIL
                         o.added = ret.GetDateTime(7);
                         o.updated = ret.GetDateTime(8);
                         o.creator = actions.v2_Encrypt(ret.GetString(9));
-                        check.Append(o);
+                        check.Add(o);
                     }
                 }
                 catch (Exception msg)
@@ -638,8 +665,8 @@ namespace REPO.EMAIL
                 }
                 connection.Close();
             }
-            ACTIONS.Logging.Log("GETTING", "BUSINESS INTEREST EMAIL CONFIRMATIONS", creds[0], check.Length.ToString());
-            return check;
+            ACTIONS.Logging.Log("GETTING", "BUSINESS INTEREST MEETING TIMES", null, check.Count.ToString());
+            return check.ToArray();
         }
 
         public async Task<int> CreateMeetingTime(string email, models.MeetingTime[] times)
@@ -653,14 +680,17 @@ namespace REPO.EMAIL
             {
                 return 0;
             }
-            for (int i = 0; i < times.Length - 1; i++)
+            Console.WriteLine($"Times available to upload {times.Length}");
+            for (int i = 0; i < times.Length; i++)
             {
+                Console.WriteLine(check);
                 using (NpgsqlConnection connection = new NpgsqlConnection(dbconn))
                 {
                     var command = new NpgsqlCommand(cmdText: cmd, connection: connection);
+                    var mf = times[i].frequency ?? models.MeetingFrequency.OneTime;
                     command.Parameters.AddWithValue("@email", email);
                     command.Parameters.AddWithValue("@host", times[i].host ?? "Sendes");
-                    command.Parameters.AddWithValue("@frequency", times[i].frequency ?? models.MeetingFrequency.OneTime);
+                    command.Parameters.AddWithValue("@frequency", (int)mf);
                     command.Parameters.AddWithValue("@day", times[i].day ?? "");
                     command.Parameters.AddWithValue("@time", times[i].time ?? "");
                     command.Parameters.AddWithValue("@timezone", times[i].timezone ?? "");

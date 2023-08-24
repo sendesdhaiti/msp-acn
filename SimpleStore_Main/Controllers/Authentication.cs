@@ -62,7 +62,8 @@ namespace SimpleStore_Main.Controllers
                 return BadRequest(new object?[] { null, $"Something went wrong when looking for your account. Check your responses!" });
             }
         }
-        public class UpdateAccount {
+        public class UpdateAccount
+        {
             public string? email { get; set; }
             public models.Account? account { get; set; }
         }
@@ -74,7 +75,7 @@ namespace SimpleStore_Main.Controllers
             {
                 var e = this.actions.DecryptFromClient(o.email);
                 var p = this.actions.DecryptFromClient(o.account.password);
-                models.Account? updated = await this.accounts.UpdateAccount(e,o.account.email, p, o.account.username, o.account.verified);
+                models.Account? updated = await this.accounts.UpdateAccount(e, o.account.email, p, o.account.username, o.account.verified);
                 if (updated != null)
                 {
                     return Ok(
@@ -93,18 +94,29 @@ namespace SimpleStore_Main.Controllers
                 return BadRequest(new object?[] { null, $"Something went wrong while updating your account. Check your responses!" });
             }
         }
-        public class VerifyAccount {
+        public class VerifyAccount
+        {
             public string? email { get; set; }
             public int code { get; set; }
+            public bool v2_or_client { get; set; }
         }
 
         [HttpPut("verify-account")]
         public async Task<ActionResult<object>> VerifyUserAccount([FromBody] VerifyAccount o)
         {
+            Console.WriteLine(ACTIONS.all.msactions._ToString(o));
             if (o != null && o.email != null)
             {
-                var e = this.actions.v2_Decrypt(o.email);
-               bool updated = await this.accounts.VerifyAccount(e,o.code);
+                string e = "";
+                if (o.v2_or_client)
+                {
+                    e = this.actions.v2_Decrypt(o.email);
+                }
+                else
+                {
+                    e = this.actions.DecryptFromClient(o.email);
+                }
+                bool updated = await this.accounts.VerifyAccount(e, o.code);
                 if (updated)
                 {
                     return Ok(
@@ -131,26 +143,29 @@ namespace SimpleStore_Main.Controllers
             {
                 var e = this.actions.DecryptFromClient(email);
                 bool del = await this.accounts.DeleteAccount(e);
-                if(del){
+                if (del)
+                {
                     return Ok(
-                        new object[]{del, "Your account has been removed. It's sad to see you go! 😢"}
+                        new object[] { del, "Your account has been removed. It's sad to see you go! 😢" }
                     );
-                }else{
+                }
+                else
+                {
                     return NotFound(
-                        new object[]{del, $"Your account was not found for '{e}'. Check your responses!"}
+                        new object[] { del, $"Your account was not found for '{e}'. Check your responses!" }
                     );
                 }
             }
             else
             {
-                return BadRequest(new object[]{false, "Something went wrong with your request. Check your responses!"});
+                return BadRequest(new object[] { false, "Something went wrong with your request. Check your responses!" });
             }
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<object>> Register([FromBody] models.Account o)
         {
-            
+
             if (
                 o != null
                 && o.email != null
@@ -166,15 +181,18 @@ namespace SimpleStore_Main.Controllers
                 var l = this.actions.DecryptFromClient(o.lastname);
                 var u = this.actions.DecryptFromClient(o.username);
                 bool del = await this.accounts.CreateAccount(e, p, f, l, u);
-                if(del){
+                if (del)
+                {
                     return Created(
                         "new-user",
-                        new object[]{del, "Your account has been created. WELCOME TO THE MARKET ALERT GANG! 🔥" }
+                        new object[] { del, "Your account has been created. WELCOME TO THE MARKET ALERT GANG! 🔥" }
                     );
-                }else{
+                }
+                else
+                {
                     return Created(
                         "new-user",
-                        new object[]{del, $"Your account was not created for '{e}'. Check your responses!"}
+                        new object[] { del, $"Your account was not created for '{e}'. Check your responses!" }
                     );
                 }
             }
