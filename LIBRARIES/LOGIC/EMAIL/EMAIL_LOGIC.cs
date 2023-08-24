@@ -107,7 +107,7 @@ namespace LOGIC.EMAIL
                 if (await this.email.UpdateConfirmation(creds))
                 {
                     var m = new EMAILMESSAGE() { };
-                    string e = actions.v2_Encrypt(creds[0].ToString() ?? "");
+                    string e = (string)creds[0];
                     e = Uri.EscapeDataString(e);
                     await this.user.UpdateAccount(e, null, null, null, true);
                     m.msg = new string[2] { $"Your attendance for the business meeting on {creds[3]} has been confirmed.",
@@ -120,35 +120,6 @@ namespace LOGIC.EMAIL
                 }
             }
         }
-
-        //public async Task<bool> NewConfirmationCode(object[] creds)
-        //{
-        //    if (this.email == null)
-        //    {
-        //        return false;
-        //    }
-        //    if (creds.Length < 3)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        if (await this.email.UpdateConfirmation(creds))
-        //        {
-        //            var m = new EMAILMESSAGE() { };
-        //            string e = actions.v2_Encrypt(creds[0].ToString() ?? "");
-        //            e = Uri.EscapeDataString(e);
-        //            await this.user.UpdateAccount(e, null, null, null, true);
-        //            m.msg = new string[2] { $"Your attendance for the business meeting on {creds[3]} has been confirmed.",
-        //                $"You can find these times and your confirmation by following this link: See Meeting Time '{api_fe}/portal'" };
-        //            return await this.email.SendEmailMessage((string)creds[0], m);
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //}
 
         public async Task<int> CreateMeetingTime(string email, models.MeetingTime[] times)
         {
