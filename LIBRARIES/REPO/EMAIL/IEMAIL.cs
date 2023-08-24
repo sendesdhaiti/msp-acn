@@ -8,13 +8,35 @@ namespace REPO.EMAIL
     public interface IEMAIL
     {
         Task<bool> SendACNBusinessInterestMessage(
-            string receiverEmail,
-            string receiverFirstName,
-            string receiverLastName,
-            string[] msgs,
-            string? note
+            string _receiverEmail,
+            string _receiverFirstName,
+            string _receiverLastName,
+            string[] _msgs,
+            string? _note,
+            int _code
         );
-        Task<bool> RegisterUser(string[] creds);
         Task<bool> CreateConfirmation(object[] creds);
+        Task<bool> UpdateConfirmation(object[] creds);
+        Task<models.MeetingConfirmation[]?> GetConfirmations(object[] creds, bool All_or_Personal);
+        Task<int> CreateMeetingTime(string email, models.MeetingTime[] times);
+        Task<models.MeetingTime[]> GetMeetingTimes();
+        Task<models.MeetingConfirmation[]?> CheckConfirmation(string email);
+        Task<bool> SendEmailMessage(
+            string _receiverEmail,
+            EMAILMESSAGE _msgs
+        );
+        /// <summary>
+        /// Gets a six digit integer code
+        /// </summary>
+        /// <returns></returns>
+        int GetCode();
+        /// <summary>
+        /// New Confirmation code Update to Confirmation
+        /// </summary>
+        /// <param name="creds"></param>
+        /// <returns></returns>
+        Task<bool> NewConfirmationCode(string email, int code);
+
+
     }
 }

@@ -6,7 +6,8 @@ const string MyAllowAllOrigins = "MyAllowAllOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 var config = SimpleStore_Main.ConfigManager.AppSetting;
-
+Console.ForegroundColor
+            = ConsoleColor.Red;
 
 
 

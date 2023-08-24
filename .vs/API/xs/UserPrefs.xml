@@ -1,0 +1,53 @@
+﻿<Properties StartupConfiguration="{10D9BB9E-C087-49BB-A57D-345724EA1506}|Default">
+  <MonoDevelop.Ide.ItemProperties.SimpleStore__Tests PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="LIBRARIES/ACTIONS/Logging.cs">
+    <Files>
+      <File FileName="SimpleStore_Main/Controllers/Contact.cs" Line="89" Column="44" />
+      <File FileName="LIBRARIES/REPO/EMAIL/EMAIL.cs" Line="440" Column="89" />
+      <File FileName="LIBRARIES/REPO/EMAIL/IEMAIL.cs" Line="25" Column="1" />
+      <File FileName="LIBRARIES/LOGIC/EMAIL/EMAIL_LOGIC.cs" Line="16" Column="77" />
+      <File FileName="LIBRARIES/ACTIONS/STYLE/STYLES.cs" Line="91" Column="23" />
+      <File FileName="LIBRARIES/MODELS/ContactClass.cs" Line="33" Column="30" />
+      <File FileName="LIBRARIES/MODELS/GlobalUsings.cs" />
+      <File FileName="LIBRARIES/ACTIONS/Logging.cs" Line="13" Column="248" />
+      <File FileName="SimpleStore_Main/Controllers/Authentication.cs" Line="48" Column="48" />
+      <File FileName="LIBRARIES/ACTIONS/Imsactions.cs" Line="44" Column="33" />
+      <File FileName="LIBRARIES/ACTIONS/msactions.cs" Line="555" Column="22" />
+      <File FileName="LIBRARIES/ACTIONS/STATIC FILES/XMLVariables.cs" Line="42" Column="55" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="API" expanded="True">
+            <Node name="LIBRARIES" expanded="True">
+              <Node name="LOGIC" expanded="True">
+                <Node name="EMAIL" expanded="True" />
+              </Node>
+              <Node name="MODELS" expanded="True" />
+              <Node name="MS.ACTIONS" expanded="True">
+                <Node name="STATIC FILES" expanded="True" />
+                <Node name="STYLE" expanded="True" />
+                <Node name="Logging.cs" selected="True" />
+              </Node>
+              <Node name="REPO" expanded="True">
+                <Node name="EMAIL" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="SimpleStore_Main" expanded="True">
+              <Node name="Config" expanded="True" />
+              <Node name="Content" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+</Properties>

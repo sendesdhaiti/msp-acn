@@ -8,13 +8,13 @@ namespace ACTIONS.STATICFILES
     public class XMLClass
     {
         [XmlElement("SMTPServer")]
-        public XMLVariables<string> SMTPServer { get; set; }
+        public XMLVariables<string>? SMTPServer { get; set; }
 
         [XmlElement("SMTPUsername")]
-        public XMLVariables<string> SMTPUsername { get; set; }
+        public XMLVariables<string>? SMTPUsername { get; set; }
 
         [XmlElement("SMTPPassword")]
-        public XMLVariables<string> SMTPPassword { get; set; }
+        public XMLVariables<string>? SMTPPassword { get; set; }
 
     }
 	public class XMLVariables<T>
@@ -40,9 +40,7 @@ namespace ACTIONS.STATICFILES
             string[] a = new string[3];
             // A FileStream is needed to read the XML document.
             var path = Directory.GetCurrentDirectory();
-            var path2 = Environment.CurrentDirectory;
             Console.WriteLine(path);
-            Console.WriteLine(path2);
 
             using (FileStream fs = new FileStream(path + "/Content/Variables.xml", FileMode.OpenOrCreate))
 			{
@@ -56,20 +54,15 @@ namespace ACTIONS.STATICFILES
                     XmlAttributeEventHandler(serializer_UnknownAttribute);
 
                 // Declares an object variable of the type to be deserialized.
-                XMLClass po;
+                XMLClass? po;
                 // Uses the Deserialize method to restore the object's state
                 // with data from the XML document. */
-                po = (XMLClass)serializer.Deserialize(fs);
-
-                // Reads the order date.
-                //Console.WriteLine("SMTPServer: " + po.SMTPServer + $" and {po.SMTPServer.Value}");
-                //Console.WriteLine("SMTPUsername: " + po.SMTPUsername + $" and {po.SMTPUsername.Value}");
-                //Console.WriteLine("SMTPPassword: " + po.SMTPPassword + $" and {po.SMTPPassword.Value}");
+                po = (XMLClass?)serializer.Deserialize(fs);
 
                 // Reads the shipping address.
-                a[0] = po.SMTPServer.Value;
-                a[1] = po.SMTPUsername.Value;
-                a[2] = po.SMTPPassword.Value;
+                a[0] = po?.SMTPServer?.Value ?? "";
+                a[1] = po?.SMTPUsername?.Value ?? "";
+                a[2] = po?.SMTPPassword?.Value ?? "";
                 
             }
             return a;

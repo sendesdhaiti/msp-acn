@@ -10,9 +10,14 @@ namespace ACTIONS
 {
     public interface Imsactions
     {
+        /// <summary>
+        /// Checks if a string is base64 encoded
+        /// </summary>
+        /// <param name="base64"></param>
+        /// <returns></returns>
+        bool IsBase64String(string base64);
         string break_();
         T ConvertJsonObj<T>( string? jsonObj);
-        NullObjectExceptionFindingWriter NullObjWriter {get;}
         /// <summary>
         /// Gets a Form File from a specified path v3
         /// </summary>
@@ -42,7 +47,7 @@ namespace ACTIONS
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        string DecryptFromClient(string text);
+        string DecryptFromClient(string? text);
 
         /// <summary>
         /// Checks is an email is valid or not
