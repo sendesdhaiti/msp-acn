@@ -43,11 +43,12 @@ namespace SimpleStore_Main.Controllers
             {
                 var e = this.actions.DecryptFromClient(o.email);
                 var p = this.actions.DecryptFromClient(o.password);
-                models.Account? del = await this.accounts.Login(e, p);
-                if (del != null)
+                models.Account? acc = await this.accounts.Login(e, p);
+                if (acc != null)
                 {
+                    acc.token = this.actions.GetToken().Generate_MINTSOUP_JWTtoken(acc.id ?? "empty id", acc.email ?? "empty email", acc.username, "Email Portal", "MSP BI");
                     return Ok(
-                        new object[] { del, $"Welcome back '{del.username?.ToLower() ?? del.email?.ToLower()}'!🔥" }
+                        new object[] { acc, $"Welcome back '{acc.username?.ToLower() ?? acc.email?.ToLower()}'!🔥" }
                     );
                 }
                 else
@@ -68,7 +69,7 @@ namespace SimpleStore_Main.Controllers
             public models.Account? account { get; set; }
         }
 
-        [HttpPut("update-account")]
+        [HttpPut("portal/update-account")]
         public async Task<ActionResult<object>> UpdateUserAccount([FromBody] UpdateAccount o)
         {
             if (o != null && o.email != null && o.account != null)
@@ -136,7 +137,7 @@ namespace SimpleStore_Main.Controllers
             }
         }
 
-        [HttpDelete("delete-account")]
+        [HttpDelete("portal/delete-account")]
         public async Task<ActionResult<object>> Delete([FromQuery] string? email)
         {
             if (email != null)

@@ -536,7 +536,8 @@ namespace ACTIONS.all
 
         public bool IsBase64String(string? base64)
         {
-            if(base64 == null) {
+            if (base64 == null)
+            {
                 return false;
             }
             base64 = base64.Trim();
@@ -546,7 +547,8 @@ namespace ACTIONS.all
 
         public string DecryptFromClient(string? text)
         {
-            if (!IsBase64String(text)) {
+            if (!IsBase64String(text))
+            {
                 return "non encoded string spotted";
             }
             var keybytes = Encoding.UTF8.GetBytes(PUBLIC_ENCRYPTKEY);
@@ -612,7 +614,7 @@ namespace ACTIONS.all
                 // sort properties by name
                 Array.Sort(
                     propertyInfos,
-                    delegate(PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+                    delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
                     {
                         return propertyInfo1.Name.CompareTo(propertyInfo2.Name);
                     }
@@ -1668,24 +1670,31 @@ namespace ACTIONS.all
                     MINTSOUP_securityKey,
                     SecurityAlgorithms.HmacSha256
                 );
+                string role = "User";
+
+                if (email == "sendes12@gmail.com" || email == "sdhaiti.business@gmail.com")
+                {
+                    role = "Admin";
+                }
                 var myclaims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Iss, "MINTSOUP"),
-                    new Claim("PersonId", PersonId), //TODO - we should check if the user's credentials say they are admin/viewer/guest/or none
+                    new Claim(ClaimTypes.Sid, PersonId), //TODO - we should check if the user's credentials say they are admin/viewer/guest/or none
                     new Claim(JwtRegisteredClaimNames.Email, email),
-                    new Claim("Username", username ?? PersonId),
+                    new Claim(ClaimTypes.Name, username ?? PersonId),
+                    new Claim(ClaimTypes.Role, role),
                     new Claim(
                         JwtRegisteredClaimNames.AuthTime,
                         DateTime.UtcNow.AddHours(-4).ToString()
                     ),
-                    new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddHours(-3).ToString())
+                    new Claim(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddHours(0.5).ToString())
                 };
 
                 var tokenOptions = new JwtSecurityToken(
                     issuer: RequestIssuerUrl,
                     audience: RequestAudienceUrl,
                     claims: myclaims,
-                    expires: DateTime.Now.AddMinutes(10),
+                    expires: DateTime.UtcNow.AddHours(0.5),
                     signingCredentials: token_credentials
                 );
                 return new JwtSecurityTokenHandler().WriteToken(tokenOptions);

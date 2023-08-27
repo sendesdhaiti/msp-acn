@@ -1,8 +1,12 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using SimpleStore_Main;
 // using REPO;
 // using LOGIC;
 const string MyAllowAllOrigins = "MyAllowAllOrigins";
+const string tokenScheme = nameof(tokenScheme);
 
 var builder = WebApplication.CreateBuilder(args);
 var config = SimpleStore_Main.ConfigManager.AppSetting;
@@ -49,6 +53,53 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthentication(tokenScheme)
+.AddJwtBearer(tokenScheme, options =>
+{
+    options.Events = new JwtBearerEvents()
+    {
+        OnMessageReceived = (context) =>
+        {
+            var path = context.HttpContext.Request.Path;
+            Console.WriteLine("Bearer Authentication on " + ACTIONS.all.msactions._ToString(path));
+            if (path.StartsWithSegments("/Contact/portal ") || path.StartsWithSegments("/Authenitcation/portal"))
+            {
+                Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query["access_token"];
+                Console.WriteLine("User's access token is: ", ACTIONS.all.msactions._ToString(accessToken));
+
+                if (!string.IsNullOrWhiteSpace(accessToken))
+                {
+                    var claims = new Claim[]{
+                        new Claim("user_id", accessToken ),
+                        new Claim("token", "token_claim"),
+                      };
+
+                    var identity = new ClaimsIdentity(claims);
+                    context.Principal = new ClaimsPrincipal(identity);
+                    context.Success();
+                }
+            }
+
+            return Task.CompletedTask;
+        }
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    // var builder = new AuthorizationPolicyBuilder("signalr-auth-cookie");
+    // builder.RequireClaim("user_id");
+    // options.DefaultPolicy = builder.Build();
+    options.AddPolicy("Token", policy => policy.AddAuthenticationSchemes(tokenScheme).RequireAuthenticatedUser());
+
+    var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
+        JwtBearerDefaults.AuthenticationScheme);
+    defaultAuthorizationPolicyBuilder =
+        defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+
+    options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,6 +114,7 @@ app.UseCors(MyAllowAllOrigins);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

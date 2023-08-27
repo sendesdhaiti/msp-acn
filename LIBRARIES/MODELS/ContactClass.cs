@@ -25,6 +25,7 @@ namespace MODELS
         public DateTime? updated { get; set; }
         public string? email { get; set; }
         public bool v2_or_client { get; set; }
+        public MeetingTime? time { get; set; }
     }
     public enum MeetingFrequency {
         OneTime,
@@ -39,7 +40,8 @@ namespace MODELS
     {
         public string? id { get; set; }
         public string? host { get; set; }
-        public MeetingFrequency? frequency { get; set; }
+        public string? hostemail { get; set; }
+        public MeetingFrequency frequency { get; set; }
         public string? timezone { get; set; }
         public string? day { get; set; }
         public string? time { get; set; }
