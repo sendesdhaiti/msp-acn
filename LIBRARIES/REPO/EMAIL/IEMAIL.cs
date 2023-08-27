@@ -20,6 +20,7 @@ namespace REPO.EMAIL
         Task<models.MeetingConfirmation[]?> GetConfirmations(object[] creds, bool All_or_Personal);
         Task<int> CreateMeetingTime(string email, models.MeetingTime[] times);
         Task<models.MeetingTime[]> GetMeetingTimes();
+        Task<models.MeetingTime[]> GetMeetingTimes(string email);
         Task<models.MeetingConfirmation[]?> CheckConfirmation(string email);
         Task<bool> SendEmailMessage(
             string _receiverEmail,

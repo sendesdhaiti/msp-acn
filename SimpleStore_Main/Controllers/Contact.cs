@@ -88,7 +88,7 @@ namespace SimpleStore_Main.Controllers
 
 
 
-            var sent = await this.logic.UpdateConfirmation(creds: send);
+            var sent = await this.logic.UpdateConfirmation(creds: send, o.time);
             if (sent)
             {
                 return Ok(new object[] { sent, $"Your interest about our business meetings where you can learn to make passive income with a team in services has been officially updated. CHECK YOUR EMAIL AT '{e.ToUpper()}' FOR MORE DETAILS! If you chose to decline the confirmation, you may ignore this message.", });
@@ -133,7 +133,7 @@ namespace SimpleStore_Main.Controllers
             }
         }
 
-        [HttpGet("get-email-confirmations")]
+        [HttpGet("portal/get-email-confirmations")]
         public async Task<IActionResult> GetConfirmations([FromQuery] string encryptedUser)
         {
             string e = actions.DecryptFromClient(encryptedUser);
@@ -153,22 +153,23 @@ namespace SimpleStore_Main.Controllers
 
         public class _meetingTimes
         {
-            public string? email { get; set; }
-            public models.MeetingTime[]? times { get; set; }
+            public string email { get; set; }
+            public models.MeetingTime[] times { get; set; }
         }
 
-        [HttpPost("add-meeting-time")]
-        public async Task<IActionResult> CreateMeetingTimes([FromBody] _meetingTimes o)
+        [HttpPost("portal/add-meeting-time")]
+        public async Task<IActionResult> CreateMeetingTimes([FromBody] _meetingTimes meetingtime_obj)
         {
-            if (o.email != null && o.times != null)
+            Console.WriteLine(ACTIONS.all.msactions._ToString(meetingtime_obj));
+            if (meetingtime_obj.email != null && meetingtime_obj.times != null)
             {
                 string e;
                 try
                 {
-                    e = actions.DecryptFromClient(o.email);
-                    for (int i = 0; i < o.times.Length - 1; i++)
+                    e = actions.DecryptFromClient(meetingtime_obj.email);
+                    for (int i = 0; i < meetingtime_obj.times.Length - 1; i++)
                     {
-                        o.times[i].creator = actions.DecryptFromClient(o.times[i].creator);
+                        meetingtime_obj.times[i].creator = actions.DecryptFromClient(meetingtime_obj.times[i].creator);
                     }
 
                 }
@@ -176,9 +177,9 @@ namespace SimpleStore_Main.Controllers
                 {
                     e = "unencrypted email was used";
                 }
-                Console.WriteLine(ACTIONS.all.msactions._ToString(o));
+                
                 Console.WriteLine(e);
-                int check = await this.logic.CreateMeetingTime(e, o.times);
+                int check = await this.logic.CreateMeetingTime(e, meetingtime_obj.times);
                 var x = new object[2] { false, "" };
                 Console.WriteLine(check);
                 if (check > 0)
@@ -209,22 +210,29 @@ namespace SimpleStore_Main.Controllers
         [HttpGet("get-meeting-times")]
         public async Task<IActionResult> GetMeetingTimes([FromQuery] GetMeetingTimesClass user)
         {
-            //Console.WriteLine(ACTIONS.all.msactions._ToString(user));
-            //string e;
-            //if (user.v2_or_client_Encryption == true)
-            //{
-            //    e = actions.v2_Decrypt(user.useremail);
-            //}
-            //else
-            //{
-            //    e = actions.DecryptFromClient(user.useremail);
-            //}
-            //Console.WriteLine(ACTIONS.all.msactions._ToString(e));
-            //if (!actions.IsValidEmail(e))
-            //{
-            //    return Ok(new object[1] { "not a valid email" });
-            //}
-            var mt = await this.logic.GetMeetingTimes();
+            string? all = Request.Headers["get_all"];
+            Console.WriteLine(ACTIONS.all.msactions._ToString(user));
+            string e;
+            if (user.v2_or_client_Encryption == true)
+            {
+                e = actions.v2_Decrypt(user.useremail);
+            }
+            else
+            {
+                e = actions.DecryptFromClient(user.useremail);
+            }
+            Console.WriteLine(ACTIONS.all.msactions._ToString(e));
+            if (!actions.IsValidEmail(e))
+            {
+                return Ok(new object[1] { "not a valid email" });
+            }
+            models.MeetingTime[]? mt;
+            if (all == "get_all") {
+                 mt = await this.logic.GetMeetingTimes(null);
+            }
+            else {
+                 mt = await this.logic.GetMeetingTimes(e);
+            }
             Console.WriteLine(ACTIONS.all.msactions._ToString(mt));
             return Ok(mt);
         }

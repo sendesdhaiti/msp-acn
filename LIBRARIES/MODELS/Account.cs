@@ -17,5 +17,6 @@ namespace MODELS
 		public bool verified {get;set;}
 		public DateTime added {get;set;}
 		public DateTime updated {get;set;}
+		public string? token { get; set; }
     }
 }
