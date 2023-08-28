@@ -9,6 +9,8 @@ const string MyAllowAllOrigins = "MyAllowAllOrigins";
 const string tokenScheme = nameof(tokenScheme);
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory())
+            .UseWebRoot("Content");
 var config = SimpleStore_Main.ConfigManager.AppSetting;
 Console.ForegroundColor
             = ConsoleColor.Red;
