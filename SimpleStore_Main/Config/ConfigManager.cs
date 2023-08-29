@@ -20,6 +20,7 @@ namespace SimpleStore_Main
                         .Build();
 #else
                     ACTIONS.Logging.Log("CHECKING VARIABLES","DEBUGGER",null, "Production build");
+                    Console.WriteLine(ACTIONS.all.msactions._ToString(Directory.GetDirectories(Environment.CurrentDirectory)));
                     AppSetting = new ConfigurationBuilder()
                         .SetBasePath(Environment.CurrentDirectory)
                         .AddJsonFile("appsettings.json")
