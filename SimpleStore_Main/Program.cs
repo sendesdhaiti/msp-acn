@@ -11,8 +11,8 @@ const string MyAllowAllOrigins = "MyAllowAllOrigins";
 const string tokenScheme = nameof(tokenScheme);
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory())
-//            .UseWebRoot("wwwroot");
+//builder.WebHost.UseWebRoot(Environment.CurrentDirectory)
+//            .UseWebRoot("Content");
 var config = SimpleStore_Main.ConfigManager.AppSetting;
 Console.ForegroundColor
             = ConsoleColor.Red;
@@ -125,6 +125,7 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new PhysicalFileProvider(
         Path.Combine(Environment.CurrentDirectory, "Content")),
     RequestPath = new PathString("/Content")
+
 });
 
 app.UseAuthentication();
