@@ -122,8 +122,9 @@ app.UseStaticFiles();
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Environment.CurrentDirectory),
-    //RequestPath = new PathString("/Content")
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Environment.CurrentDirectory, "/Content")),
+    RequestPath = new PathString("/Content")
 });
 
 app.UseAuthentication();
