@@ -1,7 +1,9 @@
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.Extensions.FileProviders;
 using SimpleStore_Main;
 // using REPO;
 // using LOGIC;
@@ -9,8 +11,8 @@ const string MyAllowAllOrigins = "MyAllowAllOrigins";
 const string tokenScheme = nameof(tokenScheme);
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory())
-            .UseWebRoot("Content");
+//builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory())
+//            .UseWebRoot("wwwroot");
 var config = SimpleStore_Main.ConfigManager.AppSetting;
 Console.ForegroundColor
             = ConsoleColor.Red;
@@ -35,7 +37,9 @@ builder.Services.AddScoped<REPO.IOrder_REPO, REPO.Order_REPO>();
 builder.Services.AddScoped<LOGIC.IOrderLogic, LOGIC.OrderLogic>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters
+            .Add(new JsonStringEnumConverter()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -115,6 +119,12 @@ app.UseCors(MyAllowAllOrigins);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Environment.CurrentDirectory),
+    RequestPath = new PathString("/Content")
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

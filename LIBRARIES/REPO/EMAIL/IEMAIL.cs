@@ -19,6 +19,7 @@ namespace REPO.EMAIL
         Task<bool> UpdateConfirmation(object[] creds);
         Task<models.MeetingConfirmation[]?> GetConfirmations(object[] creds, bool All_or_Personal);
         Task<int> CreateMeetingTime(string email, models.MeetingTime[] times);
+        Task<int> UpdateMeetingTime(string email, models.MeetingTime[] times);
         Task<models.MeetingTime[]> GetMeetingTimes();
         Task<models.MeetingTime[]> GetMeetingTimes(string email);
         Task<models.MeetingConfirmation[]?> CheckConfirmation(string email);
@@ -37,6 +38,20 @@ namespace REPO.EMAIL
         /// <param name="creds"></param>
         /// <returns></returns>
         Task<bool> NewConfirmationCode(string email, int code);
+        /// <summary>
+        /// Get The meeting times of conr=firmation using confirmation id
+        /// </summary>
+        /// <param name="confirmationId"></param>
+        /// <returns></returns>
+        Task<models.MeetingTime> GetConfirmationMeetingTimes(Guid confirmationId);
+
+        /// <summary>
+        /// Create the relation between meetingtime and confirmation
+        /// </summary>
+        /// <param name="confirmation"></param>
+        /// <param name="meetingTime"></param>
+        /// <returns></returns>
+        Task<bool> CreateConfirmationMeetingTimeRelation(Guid confirmation, Guid meetingTime);
 
 
     }

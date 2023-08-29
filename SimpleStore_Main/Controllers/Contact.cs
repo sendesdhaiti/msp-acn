@@ -134,15 +134,23 @@ namespace SimpleStore_Main.Controllers
         }
 
         [HttpGet("portal/get-email-confirmations")]
-        public async Task<IActionResult> GetConfirmations([FromQuery] string encryptedUser)
+        public async Task<IActionResult> GetConfirmations([FromQuery] GetMeetingTimesClass user)
         {
-            string e = actions.DecryptFromClient(encryptedUser);
+            string e;
+            if (user.v2_or_client_Encryption == true)
+            {
+                e = actions.v2_Decrypt(user.useremail);
+            }
+            else
+            {
+                e = actions.DecryptFromClient(user.useremail);
+            }
             bool all_or_personal = false;
-            if (e == "sendes12@gmail.com" || e == "sdhaiti.business@gmail.com")
+            if (e == "sdhaiti.business@gmail.com")
             {
                 all_or_personal = true;
             }
-            return Ok(await this.logic.GetConfirmations(new object[] { e }, all_or_personal));
+            return Ok(await this.logic.GetConfirmations(new object[1] { e }, all_or_personal));
         }
 
         [HttpGet("check-email-notifications")]
@@ -169,7 +177,7 @@ namespace SimpleStore_Main.Controllers
                     e = actions.DecryptFromClient(meetingtime_obj.email);
                     for (int i = 0; i < meetingtime_obj.times.Length - 1; i++)
                     {
-                        meetingtime_obj.times[i].creator = actions.DecryptFromClient(meetingtime_obj.times[i].creator);
+                        meetingtime_obj.times[i].creator = e;
                     }
 
                 }
@@ -199,6 +207,50 @@ namespace SimpleStore_Main.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPut("portal/update-meeting-time")]
+        public async Task<IActionResult> UpdateMeetingTimes([FromBody] _meetingTimes meetingtime_obj)
+        {
+            Console.WriteLine(ACTIONS.all.msactions._ToString(meetingtime_obj));
+            if (meetingtime_obj.email != null && meetingtime_obj.times != null)
+            {
+                string e;
+                try
+                {
+                    e = actions.DecryptFromClient(meetingtime_obj.email);
+                    for (int i = 0; i < meetingtime_obj.times.Length - 1; i++)
+                    {
+                        meetingtime_obj.times[i].creator = e;
+                    }
+
+                }
+                catch
+                {
+                    e = "unencrypted email was used";
+                }
+
+                Console.WriteLine(e);
+                int check = await this.logic.UpdateMeetingTime(e, meetingtime_obj.times);
+                var x = new object[2] { false, "" };
+                Console.WriteLine(check);
+                if (check > 0)
+                {
+                    x[0] = true;
+                    x[1] = "The meeting times have been updated.";
+                }
+                else
+                {
+                    x[0] = false;
+                    x[1] = "The meeting times could not be updated.";
+                }
+                return Ok(x);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         public class GetMeetingTimesClass
         {
             [FromQuery(Name = "encryptedUser")]

@@ -9170,6 +9170,7 @@
       "MODELS >= 1.0.0",
       "MS.ACTIONS >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Core >= 2.2.5",
+      "Newtonsoft.Json >= 13.0.3",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -9224,6 +9225,10 @@
           "Microsoft.AspNetCore.Mvc.Core": {
             "target": "Package",
             "version": "[2.2.5, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.3, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
