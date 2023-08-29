@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Xml.Serialization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ACTIONS.STATICFILES
 {
@@ -19,6 +20,11 @@ namespace ACTIONS.STATICFILES
     }
 	public class XMLVariables<T>
 	{
+        private IWebHostEnvironment _hostingEnvironment;
+        public XMLVariables(T t, IWebHostEnvironment h) {
+            _hostingEnvironment = h;
+            Value = t;
+        }
 
         [XmlAttribute]
         public T Value { get; set; }
@@ -39,7 +45,7 @@ namespace ACTIONS.STATICFILES
 		{
             string[] a = new string[3];
             // A FileStream is needed to read the XML document.
-            var path = Directory.GetCurrentDirectory();
+            var path = _hostingEnvironment.ContentRootPath;
             Console.WriteLine(path);
 
             using (FileStream fs = new FileStream(path + "/Content/Variables.xml", FileMode.OpenOrCreate))

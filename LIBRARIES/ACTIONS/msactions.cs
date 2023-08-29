@@ -12,11 +12,37 @@ using System.Xml.Serialization;
 using System.Reflection;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ACTIONS.all
 {
     public partial class msactions : Imsactions
     {
+        public msactions(IWebHostEnvironment h) {
+            //_hostingEnvironment = h;
+            //___hostingEnv = _hostingEnvironment;
+            SetEnv(h);
+        }
+        //private static IWebHostEnvironment ___hostingEnv;
+        private static  IWebHostEnvironment? _hostingEnvironment;
+        private static void SetEnv(IWebHostEnvironment h) {
+            _hostingEnvironment = h;
+        }
+        public static string _break = "\n\t\t ==============================\n";
+        public string _break_ = _break;
+
+        public string break_() => _break_;
+
+        private const string Key =
+            @"PABSAFMAQQBLAGUAeQBWAGEAbAB1AGUAPgA8AE0AbwBkAHUAbAB1AHMAPgBxAGcAMwA3AFYAUQA1AE8AdQBuADQAMwBDAEIAbQBkAEMATQB4AFMASQB6ADkAYQA2AHoAdgBMAEgAMAA5AGcAQgBvAG0AQwA1AEwARgBTAFkASABJAEcAZgAvAEUAZQBTAE4ASgBWAHUALwBBAEwAegBxAEgAYwA2AGIAcwBrAFgAbwBRAEIAZgBPAEUAMQBEAGMAVABKAEkATgBZAHAAWAByAFMALwBmAG4AcQBtAC8AUAB0AGQAcgBzAFcAeAB2AGEAWABwAHMARABTAG0AZwBhAEwASgBTAEEAZgBHAEkAYQA2ADUAdABCAHkAQgB6AE8AOAB0AFcAdABYAC8AaABQAG4ATABZAG0AdwBXAGoASgBFADQAQgB5AG0AUAArAC8AdABZAFIAdAB3AHMAbQBYAG4AdQBtAEkAbgA3ADQATQBTADMANAB6AGYAdgByAGcAcwA9ADwALwBNAG8AZAB1AGwAdQBzAD4APABFAHgAcABvAG4AZQBuAHQAPgBBAFEAQQBCADwALwBFAHgAcABvAG4AZQBuAHQAPgA8AFAAPgAyAEkAZQBBAGIATwBRAEkASQBzAG0AQwBTAGEAYgBCAG8AdwB5AHQAUwB0AFMAWQBZAHkAKwBLAG0AMQBYAFcASAB6AGUAWAA3AC8AMgBCADEAbgBUAGoAaABvAFYAZwA4AHMARgBxAEcAdgB1AHIATQBTAGcAZwB0AGUAegBqAEkAZgB3AGkAYQAyAGUAMgBiAEUAeQBSAHkASgBSAG4AegB2AFYAcgA4AFEAPQA9ADwALwBQAD4APABRAD4AeQBRADIAMABjAEEAbQBrAG8AVgBrAHQANgBXAHgARABJADgAYQB2AGcAMgByAFEARgB1AEQAZgBmAGwAagBZAEgARwBhAE4AUABEAE4AdABKAG0AOABaAEYAbgBpAEEASABWAEwAagAvAHoAagBQADEAWAB3AFQAMABTAGsAagB2AHQAQgBQAGoASwBpAHEAVQBDAFkAbQBpAEkAOAA3AEEAeABBAGwAdQB3AD0APQA8AC8AUQA+ADwARABQAD4ATwAvAEYAdgBOAFQAWAAvAHAAcABuAEEAagB1AEUAeQBWAEIAQQByAFgAVAA3AHoAbgBPAG4ASgBaAG0AMQBoADUASwB5AEEAVABIAGsAUwAyADYAcgBxAFgAaABCAEkAbwBZAHUAMwA4AHgAWgBlADgAegBIAFgAdABHAFcATABEADUAcAA4AGMATgAxADYAWABBAHIAcQBoAE8AdgBJAHYAVAB1AG0ARQBRAD0APQA8AC8ARABQAD4APABEAFEAPgBWAEUAVABmAFIAVABwADEAZQAzADkAUwBoAEEAegB4AGsAegBRADYANgBuADEAQgBuAE8AVgBDAEoAOABYADcAUgB1AFEAZwAvAEkATwBkAGsAMABkAHIAbgA0AFMAQQBSAGsAbwB3ADgAQQArAFMANQBTAHMAdABiAHoAUwBzAEcAOQBWAGEARQBsADIANwBqAFAANgBBAGwAaQBwAGEAbABLADAAVwA4AHcAPQA9ADwALwBEAFEAPgA8AEkAbgB2AGUAcgBzAGUAUQA+AEsAbwBuADUAdABZAGEAdABiAEwAbwBuAFYAUQBIAHQARQAwAE0AaABCAGoASgB6ADMAUwBKAEMAegBqAEUAOQBYAHUATAB2AEcAOABaADMAcABNADgANgBGAFoAQwBxAEQALwBpAFgAbABZAEMAUgBOAEYAWQBDAGwASABNAEEAZwArAE4AbABBAGEAQwBUAGcAQwBmAG0ARAAzAEIANQA1AGEAawBHAFgAUQA9AD0APAAvAEkAbgB2AGUAcgBzAGUAUQA+ADwARAA+AFoATABsADMAWAByAC8AawB2AGUAMgA0AFoAdQBIAFUAOAA3AHMAaQBBADYASwBwAEYAYQBBAEwAQgBmAGEAYgA2AEEATgBYAE4AbQBJAFoAYQB1AHIAZgBFAHIAVQBjAHYAUQBGAG8AcQByAEwAYQBLADQAQQBRAE8ANQBrAFAAUgA3AFIAawB0AFQAVQBuAG0AWQBvAHYAbgAzAFYANgBkADUAQQBUAHcANwAxAEgASABRAE4ANgBVAEoAWABmAHgANQBWADMAdABYADYATgBpADgAawBnAEMAUAB3AEUANABFAEkAMQBqAHoAdgBQAFgARABUAFEARQBvAGsAOABGADUANwB3AFUAbQBqAFAASQAzAFMAVwA4ADEAQgBUADIANABYAHYASAA3AHEAagBEADQATwBLAHYAZgA3AE4AKwBOAG4ATQB2AEEAQQBoAGwATQBFAD0APAAvAEQAPgA8AC8AUgBTAEEASwBlAHkAVgBhAGwAdQBlAD4A";
+        private static string PRIVATE_ENCRYPTKEY
+        {
+            get => "SENDESDHAITI|";
+        }
+        private static string PUBLIC_ENCRYPTKEY
+        {
+            get => "MINTSOUPSERVICES";
+        }
         public static EncryptDecrypt _EncryptDecrypt = new EncryptDecrypt();
         public string GetClientIpAddress(HttpContext httpContext)
         {
@@ -93,21 +119,7 @@ namespace ACTIONS.all
             }
         }
 
-        public static string _break = "\n\t\t ==============================\n";
-        public string _break_ = _break;
-
-        public string break_() => _break_;
-
-        private const string Key =
-            @"PABSAFMAQQBLAGUAeQBWAGEAbAB1AGUAPgA8AE0AbwBkAHUAbAB1AHMAPgBxAGcAMwA3AFYAUQA1AE8AdQBuADQAMwBDAEIAbQBkAEMATQB4AFMASQB6ADkAYQA2AHoAdgBMAEgAMAA5AGcAQgBvAG0AQwA1AEwARgBTAFkASABJAEcAZgAvAEUAZQBTAE4ASgBWAHUALwBBAEwAegBxAEgAYwA2AGIAcwBrAFgAbwBRAEIAZgBPAEUAMQBEAGMAVABKAEkATgBZAHAAWAByAFMALwBmAG4AcQBtAC8AUAB0AGQAcgBzAFcAeAB2AGEAWABwAHMARABTAG0AZwBhAEwASgBTAEEAZgBHAEkAYQA2ADUAdABCAHkAQgB6AE8AOAB0AFcAdABYAC8AaABQAG4ATABZAG0AdwBXAGoASgBFADQAQgB5AG0AUAArAC8AdABZAFIAdAB3AHMAbQBYAG4AdQBtAEkAbgA3ADQATQBTADMANAB6AGYAdgByAGcAcwA9ADwALwBNAG8AZAB1AGwAdQBzAD4APABFAHgAcABvAG4AZQBuAHQAPgBBAFEAQQBCADwALwBFAHgAcABvAG4AZQBuAHQAPgA8AFAAPgAyAEkAZQBBAGIATwBRAEkASQBzAG0AQwBTAGEAYgBCAG8AdwB5AHQAUwB0AFMAWQBZAHkAKwBLAG0AMQBYAFcASAB6AGUAWAA3AC8AMgBCADEAbgBUAGoAaABvAFYAZwA4AHMARgBxAEcAdgB1AHIATQBTAGcAZwB0AGUAegBqAEkAZgB3AGkAYQAyAGUAMgBiAEUAeQBSAHkASgBSAG4AegB2AFYAcgA4AFEAPQA9ADwALwBQAD4APABRAD4AeQBRADIAMABjAEEAbQBrAG8AVgBrAHQANgBXAHgARABJADgAYQB2AGcAMgByAFEARgB1AEQAZgBmAGwAagBZAEgARwBhAE4AUABEAE4AdABKAG0AOABaAEYAbgBpAEEASABWAEwAagAvAHoAagBQADEAWAB3AFQAMABTAGsAagB2AHQAQgBQAGoASwBpAHEAVQBDAFkAbQBpAEkAOAA3AEEAeABBAGwAdQB3AD0APQA8AC8AUQA+ADwARABQAD4ATwAvAEYAdgBOAFQAWAAvAHAAcABuAEEAagB1AEUAeQBWAEIAQQByAFgAVAA3AHoAbgBPAG4ASgBaAG0AMQBoADUASwB5AEEAVABIAGsAUwAyADYAcgBxAFgAaABCAEkAbwBZAHUAMwA4AHgAWgBlADgAegBIAFgAdABHAFcATABEADUAcAA4AGMATgAxADYAWABBAHIAcQBoAE8AdgBJAHYAVAB1AG0ARQBRAD0APQA8AC8ARABQAD4APABEAFEAPgBWAEUAVABmAFIAVABwADEAZQAzADkAUwBoAEEAegB4AGsAegBRADYANgBuADEAQgBuAE8AVgBDAEoAOABYADcAUgB1AFEAZwAvAEkATwBkAGsAMABkAHIAbgA0AFMAQQBSAGsAbwB3ADgAQQArAFMANQBTAHMAdABiAHoAUwBzAEcAOQBWAGEARQBsADIANwBqAFAANgBBAGwAaQBwAGEAbABLADAAVwA4AHcAPQA9ADwALwBEAFEAPgA8AEkAbgB2AGUAcgBzAGUAUQA+AEsAbwBuADUAdABZAGEAdABiAEwAbwBuAFYAUQBIAHQARQAwAE0AaABCAGoASgB6ADMAUwBKAEMAegBqAEUAOQBYAHUATAB2AEcAOABaADMAcABNADgANgBGAFoAQwBxAEQALwBpAFgAbABZAEMAUgBOAEYAWQBDAGwASABNAEEAZwArAE4AbABBAGEAQwBUAGcAQwBmAG0ARAAzAEIANQA1AGEAawBHAFgAUQA9AD0APAAvAEkAbgB2AGUAcgBzAGUAUQA+ADwARAA+AFoATABsADMAWAByAC8AawB2AGUAMgA0AFoAdQBIAFUAOAA3AHMAaQBBADYASwBwAEYAYQBBAEwAQgBmAGEAYgA2AEEATgBYAE4AbQBJAFoAYQB1AHIAZgBFAHIAVQBjAHYAUQBGAG8AcQByAEwAYQBLADQAQQBRAE8ANQBrAFAAUgA3AFIAawB0AFQAVQBuAG0AWQBvAHYAbgAzAFYANgBkADUAQQBUAHcANwAxAEgASABRAE4ANgBVAEoAWABmAHgANQBWADMAdABYADYATgBpADgAawBnAEMAUAB3AEUANABFAEkAMQBqAHoAdgBQAFgARABUAFEARQBvAGsAOABGADUANwB3AFUAbQBqAFAASQAzAFMAVwA4ADEAQgBUADIANABYAHYASAA3AHEAagBEADQATwBLAHYAZgA3AE4AKwBOAG4ATQB2AEEAQQBoAGwATQBFAD0APAAvAEQAPgA8AC8AUgBTAEEASwBlAHkAVgBhAGwAdQBlAD4A";
-        private static string PRIVATE_ENCRYPTKEY
-        {
-            get => "SENDESDHAITI|";
-        }
-        private static string PUBLIC_ENCRYPTKEY
-        {
-            get => "MINTSOUPSERVICES";
-        }
+        
 
         //public ConvType<T> ConvType;
         public ConvType<object> GetConvType<T>(Type t, object o)
@@ -605,7 +617,7 @@ namespace ACTIONS.all
 
             public async Task<Dictionary<String, object>> GetTypeObjs<Ty, Class>()
             {
-                await new msactions().voidTask(1);
+                await Task.CompletedTask;
                 Dictionary<String, object> o = new Dictionary<String, object>();
                 PropertyInfo[] propertyInfos;
                 propertyInfos = typeof(Class).GetProperties(
@@ -681,7 +693,7 @@ namespace ACTIONS.all
 
             public async Task<object[]> GetTypeObjs<Ty>()
             {
-                await new msactions().voidTask(1);
+                await Task.CompletedTask;
                 object[] o = new object[] { };
                 foreach (var method in type.GetType().GetMethods())
                 {
@@ -1226,7 +1238,7 @@ namespace ACTIONS.all
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Directory.GetCurrentDirectory();
+                        var path = _hostingEnvironment?.ContentRootPath;
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //    first we read from the xml to check if RSAParams exist already
@@ -1283,6 +1295,7 @@ namespace ACTIONS.all
                     Console.WriteLine(ex.Message);
                 }
                 finally { }
+                //Logging.Log("Encrypting", "Item", text, Return);
                 return Return;
             }
 
@@ -1293,7 +1306,7 @@ namespace ACTIONS.all
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Directory.GetCurrentDirectory();
+                        var path = _hostingEnvironment?.ContentRootPath;
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //    first we read from the xml to check if RSAParams exist already
@@ -1350,6 +1363,7 @@ namespace ACTIONS.all
                     Console.WriteLine(ex.Message);
                 }
                 finally { }
+                //Logging.Log("Encrypting", "Item", text, Return.Length.ToString());
                 return Return;
             }
 
@@ -1364,7 +1378,7 @@ namespace ACTIONS.all
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Directory.GetCurrentDirectory();
+                        var path = _hostingEnvironment?.ContentRootPath;
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //first we read from the xml to check if RSAParams exist already
@@ -1394,7 +1408,6 @@ namespace ACTIONS.all
                             byte[] bi = Convert.FromBase64String(text.Trim());
                             byte[] bdecr = rsa.Decrypt(bi, false);
                             Return = Encoding.Unicode.GetString(bdecr);
-                            Console.WriteLine(_break + $"Decrypted item is {Return}" + _break);
                         }
                     }
                 }
@@ -1402,7 +1415,7 @@ namespace ACTIONS.all
                 {
                     return ex.Message;
                 }
-                finally { }
+                Logging.Log("Decrypting", "Item", text, Return);
                 return Return;
             }
 
@@ -1417,7 +1430,7 @@ namespace ACTIONS.all
                 {
                     using (var rsa = new RSACryptoServiceProvider() { KeySize = 1024 * 2 })
                     {
-                        var path = Directory.GetCurrentDirectory();
+                        var path =  _hostingEnvironment?.ContentRootPath;
                         RSAParameters? pub;
                         RSAParameters? priv;
                         //first we read from the xml to check if RSAParams exist already
@@ -1446,7 +1459,6 @@ namespace ACTIONS.all
                             rsa.ImportParameters((RSAParameters)privateRSA);
                             byte[] bdecr = rsa.Decrypt(text ?? new byte[] { }, false);
                             Return = Encoding.Unicode.GetString(bdecr ?? new byte[] { });
-                            Console.WriteLine(_break + $"Decrypted item is {Return}" + _break);
                         }
                     }
                 }
@@ -1455,6 +1467,7 @@ namespace ACTIONS.all
                     return ex.Message;
                 }
                 finally { }
+                Logging.Log("Decrypting", "Item", text, Return);
                 return Return;
             }
 

@@ -17,6 +17,7 @@ namespace LOGIC.EMAIL
         Task<models.MeetingConfirmation[]?> CheckConfirmation(string email);
         Task<bool> UpdateConfirmation(object[] creds, MeetingTime? time);
         Task<bool> NewConfirmationCode(string email);
+        Task<int> UpdateMeetingTime(string email, models.MeetingTime[] times);
     }
     public class EMAIL_LOGIC : BASELOGICCLASS, IEMAIL_LOGIC
     {
@@ -79,10 +80,6 @@ namespace LOGIC.EMAIL
 
         public async Task<bool> CreateConfirmation(object[] creds)
         {
-            if (this.email == null)
-            {
-                return false;
-            }
             if (creds.Length < 3)
             {
                 return false;
@@ -95,36 +92,45 @@ namespace LOGIC.EMAIL
 
         public async Task<bool> UpdateConfirmation(object[] creds, MeetingTime? time)
         {
-            if (this.email == null)
-            {
-                return false;
-            }
             if (creds.Length < 3)
             {
                 return false;
             }
             else
             {
+                Console.WriteLine(ACTIONS.all.msactions._ToString(creds));
                 if (await this.email.UpdateConfirmation(creds))
                 {
-                    DateTime date = (DateTime)creds[3];
-                    if(time != null) {
-                        var a = await this.user.GetAccount((string)creds[0]);
-                        if (a != null)
+                    string confirmingemstr = (string)creds[0];
+                    var a = await this.user.GetAccount(confirmingemstr);
+
+                    string date = (string)creds[3];
+                    if (time != null && a != null)
+                    {
+                        var c_ = await this.email.GetConfirmations(new object[1] { confirmingemstr }, false);
+                        if (c_ != null)
                         {
-                            await this.email.SendEmailMessage(time.hostemail ?? "",
-                                new EMAILMESSAGE()
-                                {
-                                    msg = new string[1] { $"The person by the name of {a.firstname} {a.lastname} | {(string)creds[0]} has confirmed to join your meeting {time.day} at {time.time} {time.timezone} at this time: {date.ToLongDateString()} at {date.ToShortTimeString()}." }
-                                }
-                            );
+                            var conf = c_[c_.Length - 1];
+                            Console.WriteLine($"The confirmation gotten is {conf.date}");
+                            await this.email.CreateConfirmationMeetingTimeRelation(new Guid(this.actions.v2_Decrypt(conf.id)), new Guid(this.actions.v2_Decrypt(time.id)));
+                        }
+
+                        if (time.hostemail != null)
+                        {
+                            await this.email.SendEmailMessage(time.hostemail,
+                            new EMAILMESSAGE()
+                            {
+                                msg = new string[1] { $"The person by the name of {a.firstname} {a.lastname} | {(string)creds[0]} has confirmed to join your meeting {time.day} at {time.time} {time.timezone} at this time: {date.ToLower()}." }
+                            });
+
                         }
                     }
                     var m = new EMAILMESSAGE() { };
-                    string e = actions.v2_Encrypt((string)creds[0]);
+                    string e = actions.v2_Encrypt(confirmingemstr);
+                    Console.WriteLine(confirmingemstr, e);
                     e = Uri.EscapeDataString(e);
-                    await this.user.UpdateAccount(e, null, null, null, true);
-                    m.msg = new string[2] { $"Your attendance for the business meeting on {date.ToLongDateString()} at {date.ToShortTimeString()} has been confirmed.",
+                    await this.user.UpdateAccount(confirmingemstr, null, null, null, true);
+                    m.msg = new string[2] { $"Hello {a?.firstname?.ToUpper() ?? "Market Alert Member"}. Your attendance for the business meeting on {date.ToLower()} has been confirmed.",
                         $"You can find these times and your confirmation by following this link: See Meeting Time '{api_fe}/my-confirmations/:{e}'" };
                     return await this.email.SendEmailMessage((string)creds[0], m);
                 }
@@ -137,10 +143,6 @@ namespace LOGIC.EMAIL
 
         public async Task<int> CreateMeetingTime(string email, models.MeetingTime[] times)
         {
-            if (this.email == null)
-            {
-                return 0;
-            }
             if (times.Length < 1)
             {
                 return 0;
@@ -151,19 +153,39 @@ namespace LOGIC.EMAIL
             }
         }
 
+        public async Task<int> UpdateMeetingTime(string email, models.MeetingTime[] times)
+        {
+            if (times.Length < 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return await this.email.UpdateMeetingTime(email, times);
+            }
+        }
+
         public async Task<models.MeetingConfirmation[]?> GetConfirmations(object[] creds, bool All_or_Personal)
         {
-            if (this.email == null)
-            {
-                return new MeetingConfirmation[] { };
-            }
             if (creds.Length < 1)
             {
                 return null;
             }
             else
             {
-                return await this.email.GetConfirmations(creds, All_or_Personal);
+                var c = await this.email.GetConfirmations(creds, All_or_Personal);
+                if (c != null)
+                {
+                    for (int i = 0; i < c.Length; i++)
+                    {
+                        c[i].time = await this.email.GetConfirmationMeetingTimes(new Guid(this.actions.v2_Decrypt(c[i].id)));
+                    }
+                    return c;
+                }
+                else
+                {
+                    return c;
+                }
             }
         }
         public async Task<models.MeetingTime[]> GetMeetingTimes(string? email)

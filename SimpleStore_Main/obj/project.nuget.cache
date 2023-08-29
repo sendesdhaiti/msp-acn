@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bt5H9MvgMnCuZv6jQcCDtKtBrk65IyMfad511hbsrTF8XysRfKWT53Iy2rqCgnJ/NrRjTDmBdue3/v6zDAhzBA==",
+  "dgSpecHash": "/M1iPWSRpKofbLQpCbYePqMt2DTwIWioLINeWwKFqnfIsIOBBbmU0sR6qUDZQ3VKQnWzUhOsgaMUEA62DJDCxg==",
   "success": true,
   "projectFilePath": "/Users/sendes/MintSoupPlatform/SimpleStore/API/SimpleStore_Main/SimpleStore_Main.csproj",
   "expectedPackageFiles": [
@@ -187,9 +187,9 @@
     "/Users/sendes/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg.sha512",
     "/Users/sendes/.nuget/packages/system.xml.xpath.xdocument/4.3.0/system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/microsoft.netcore.app.ref/6.0.16/microsoft.netcore.app.ref.6.0.16.nupkg.sha512",
     "/Users/sendes/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.16/microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512",
-    "/Users/sendes/.nuget/packages/microsoft.netcore.app.host.osx-x64/6.0.16/microsoft.netcore.app.host.osx-x64.6.0.16.nupkg.sha512"
+    "/Users/sendes/.nuget/packages/microsoft.netcore.app.host.osx-x64/6.0.16/microsoft.netcore.app.host.osx-x64.6.0.16.nupkg.sha512",
+    "/Users/sendes/.nuget/packages/microsoft.netcore.app.ref/6.0.16/microsoft.netcore.app.ref.6.0.16.nupkg.sha512"
   ],
   "logs": []
 }
